@@ -1,0 +1,26 @@
+server:
+  port: 8410
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://localhost/learning?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8846/oauth/key
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm
+    time-zone: GMT+8
+  cache:
+    type: redis
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

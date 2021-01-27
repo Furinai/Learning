@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.user.dao.RoleDao">
+
+    <resultMap type="cn.linter.learning.user.entity.Role" id="RoleMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <!--通过ID查询单个角色-->
+    <select id="selectById" resultMap="RoleMap">
+        select id, name, create_time, update_time
+        from role
+        where id = #{id}
+    </select>
+
+    <!--查询所有角色-->
+    <select id="list" resultMap="RoleMap">
+        select id, name, create_time, update_time
+        from role
+    </select>
+
+    <!--插入单个角色-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into role(name, create_time, update_time)
+        values (#{name}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--更新角色-->
+    <update id="update">
+        update role
+        set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <!--删除角色-->
+    <delete id="delete">
+        delete
+        from role
+        where id = #{id}
+    </delete>
+
+</mapper>

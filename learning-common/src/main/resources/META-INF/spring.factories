@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    cn.linter.learning.common.handler.GlobalExceptionHandler,\
+    cn.linter.learning.common.config.DateTimeFormatterConfig
