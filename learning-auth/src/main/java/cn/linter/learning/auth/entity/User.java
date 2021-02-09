@@ -34,6 +34,10 @@ public class User implements UserDetails {
      */
     private String fullName;
     /**
+     * 邮箱地址
+     */
+    private String emailAddress;
+    /**
      * 角色
      */
     private Role role;
@@ -52,6 +56,14 @@ public class User implements UserDetails {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public Role getRole() {
@@ -89,6 +101,7 @@ public class User implements UserDetails {
     /**
      * @return 权限列表
      */
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.getName()));
