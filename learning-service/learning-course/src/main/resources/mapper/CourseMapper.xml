@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.course.dao.CourseDao">
+
+    <resultMap type="cn.linter.learning.course.entity.Course" id="CourseMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="description" column="description"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="coverPhotoUrl" column="cover_photo_url"/>
+    </resultMap>
+
+    <!--通过ID查询单个-->
+    <select id="selectById" resultMap="CourseMap">
+        select id, name, price, description, teacher_id, cover_photo_url
+        from course
+        where id = #{id}
+    </select>
+
+    <!--查询所有-->
+    <select id="list" resultMap="CourseMap">
+        select id, name, price, description, teacher_id, cover_photo_url
+        from course
+    </select>
+
+    <!--通过实体查询所有-->
+    <select id="listByEntity" resultMap="CourseMap">
+        select id, name, price, description, teacher_id, cover_photo_url
+        from course
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="teacherId != null">
+                and teacher_id = #{teacherId}
+            </if>
+            <if test="coverPhotoUrl != null and coverPhotoUrl != ''">
+                and cover_photo_url = #{coverPhotoUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--插入单个-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into course(name, price, description, teacher_id, cover_photo_url)
+        values (#{name}, #{price}, #{description}, #{teacherId}, #{coverPhotoUrl})
+    </insert>
+
+    <!--更新-->
+    <update id="update">
+        update course
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="teacherId != null">
+                teacher_id = #{teacherId},
+            </if>
+            <if test="coverPhotoUrl != null and coverPhotoUrl != ''">
+                cover_photo_url = #{coverPhotoUrl},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除-->
+    <delete id="delete">
+        delete
+        from course
+        where id = #{id}
+    </delete>
+
+</mapper>

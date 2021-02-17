@@ -5,6 +5,7 @@
 
     <modules>
         <module>learning-user</module>
+        <module>learning-course</module>
     </modules>
 
     <parent>
