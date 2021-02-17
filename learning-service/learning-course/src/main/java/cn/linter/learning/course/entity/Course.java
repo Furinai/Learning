@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 实体类
@@ -29,7 +30,7 @@ public class Course implements Serializable {
     /**
      * 价格
      */
-    private Double price;
+    private BigDecimal price;
     /**
      * 简介
      */
