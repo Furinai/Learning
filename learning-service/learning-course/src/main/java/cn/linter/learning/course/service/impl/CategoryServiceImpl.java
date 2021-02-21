@@ -5,11 +5,10 @@ import cn.linter.learning.course.dao.CategoryDao;
 import cn.linter.learning.course.service.CategoryService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 服务实现类
+ * 分类服务实现类
  *
  * @author wangxiaoyang
  * @since 2021/02/16
@@ -17,8 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    private CategoryDao categoryDao;
+    private final CategoryDao categoryDao;
+
+    public CategoryServiceImpl(CategoryDao categoryDao) {
+        this.categoryDao = categoryDao;
+    }
 
     @Override
     public Category queryById(Long id) {

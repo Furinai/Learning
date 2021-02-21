@@ -9,7 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 控制器
+ * 课程控制器
  *
  * @author wangxiaoyang
  * @since 2021/02/16
@@ -30,8 +30,9 @@ public class CourseController {
     }
 
     @GetMapping
-    public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Course> pageInfo = courseService.list(pageNumber, pageSize);
+    public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+                                           @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String orderBy) {
+        PageInfo<Course> pageInfo = courseService.listByCategoryId(pageNumber, pageSize, categoryId, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

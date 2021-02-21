@@ -4,7 +4,7 @@ import cn.linter.learning.course.entity.Course;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 服务接口
+ * 课程服务接口
  *
  * @author wangxiaoyang
  * @since 2021/02/16
@@ -12,42 +12,53 @@ import com.github.pagehelper.PageInfo;
 public interface CourseService {
 
     /**
-     * 通过ID查询单个
+     * 通过ID查询单个课程
      *
-     * @param id ID
-     * @return 单个
+     * @param id 课程ID
+     * @return 单个课程
      */
     Course queryById(Long id);
 
     /**
-     * 分页查询所有
+     * 分页查询所有课程
      *
      * @param pageNumber 页号
      * @param pageSize   页大小
-     * @return 列表
+     * @return 课程列表
      */
     PageInfo<Course> list(int pageNumber, int pageSize);
 
     /**
-     * 新增
+     * 通过分类ID分页查询所有课程
      *
-     * @param course 实例
-     * @return 实例
+     * @param pageNumber 页号
+     * @param pageSize   页大小
+     * @param categoryId 分类ID
+     * @param orderBy    排序
+     * @return 课程列表
+     */
+    PageInfo<Course> listByCategoryId(int pageNumber, int pageSize, Integer categoryId, String orderBy);
+
+    /**
+     * 新增课程
+     *
+     * @param course 课程实例
+     * @return 课程实例
      */
     Course create(Course course);
 
     /**
-     * 更新
+     * 更新课程
      *
-     * @param course 实例
-     * @return 实例
+     * @param course 课程实例
+     * @return 课程实例
      */
     Course update(Course course);
 
     /**
-     * 删除
+     * 删除课程
      *
-     * @param id ID
+     * @param id 课程ID
      * @return 是否成功
      */
     boolean delete(Long id);

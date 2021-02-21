@@ -9,7 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 控制器
+ * 分类控制器
  *
  * @author wangxiaoyang
  * @since 2021/02/16

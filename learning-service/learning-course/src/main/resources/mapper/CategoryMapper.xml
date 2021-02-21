@@ -8,20 +8,20 @@
         <result property="parentId" column="parent_id"/>
     </resultMap>
 
-    <!--通过ID查询单个-->
+    <!--通过ID查询单个分类-->
     <select id="selectById" resultMap="CategoryMap">
         select id, name, parent_id
         from category
         where id = #{id}
     </select>
 
-    <!--查询所有-->
+    <!--查询所有分类-->
     <select id="list" resultMap="CategoryMap">
         select id, name, parent_id
         from category
     </select>
 
-    <!--通过实体查询所有-->
+    <!--通过分类实体查询所有分类-->
     <select id="listByEntity" resultMap="CategoryMap">
         select id, name, parent_id
         from category
@@ -38,13 +38,13 @@
         </where>
     </select>
 
-    <!--插入单个-->
+    <!--插入单个分类-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into category(name, parent_id)
         values (#{name}, #{parentId})
     </insert>
 
-    <!--更新-->
+    <!--更新分类-->
     <update id="update">
         update category
         <set>
@@ -58,7 +58,7 @@
         where id = #{id}
     </update>
 
-    <!--删除-->
+    <!--删除分类-->
     <delete id="delete">
         delete
         from category

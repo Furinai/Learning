@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 实体类
+ * 课程实体类
  *
  * @author wangxiaoyang
  * @since 2021/02/16

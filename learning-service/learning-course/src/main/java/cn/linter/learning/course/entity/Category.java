@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * 实体类
+ * 分类实体类
  *
  * @author wangxiaoyang
  * @since 2021/02/16

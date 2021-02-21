@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 /**
- * 数据库访问层
+ * 课程数据库访问层
  *
  * @author wangxiaoyang
  * @since 2021/02/16
@@ -15,48 +15,57 @@ import java.util.List;
 public interface CourseDao {
 
     /**
-     * 通过ID查询单个
+     * 通过ID查询单个课程
      *
-     * @param id ID
-     * @return 单个
+     * @param id 课程ID
+     * @return 单个课程
      */
     Course selectById(Long id);
 
     /**
-     * 查询所有
+     * 查询所有课程
      *
-     * @return 列表
+     * @return 课程列表
      */
     List<Course> list();
 
     /**
+     * 通过分类ID查询所有课程
+     *
+     * @param categoryId 分类ID
+     * @param orderBy    排序
+     * @return 列表
+     */
+    List<Course> listByCategoryId(Integer categoryId, String orderBy);
+
+    /**
      * 通过实例查询所有
      *
-     * @param course
-     * @return 列表
+     * @param course 课程实例
+     * @return 课程列表
      */
     List<Course> listByEntity(Course course);
 
     /**
-     * 新增
+     * 新增课程
      *
-     * @param course 实例
-     * @return 实例
+     * @param course 课程实例
+     * @return 课程实例
      */
     int insert(Course course);
 
     /**
-     * 更新
+     * 更新课程
      *
-     * @param course 实例
+     * @param course 课程实例
      * @return 影响行数
      */
     int update(Course course);
 
     /**
-     * 删除
+     * 删除课程
      *
-     * @param id ID
+     * @param id 课程ID
      * @return 影响行数
      */
     int delete(Long id);
