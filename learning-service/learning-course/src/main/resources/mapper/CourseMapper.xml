@@ -26,7 +26,7 @@
 
     <!--通过分类ID查询所有-->
     <select id="listByCategoryId" resultMap="CourseMap">
-        select id, name, price, description, teacher_id, cover_photo_url
+        select c.id, c.name, c.price, c.description, c.teacher_id, c.cover_photo_url
         from course c
         <if test="categoryId != null">
             join category_course cc on c.id = cc.course_id
