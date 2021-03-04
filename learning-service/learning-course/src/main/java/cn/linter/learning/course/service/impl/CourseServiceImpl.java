@@ -7,6 +7,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * 课程服务实现类
  *
@@ -41,12 +43,16 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course create(Course course) {
+        LocalDateTime now = LocalDateTime.now();
+        course.setCreateTime(now);
+        course.setUpdateTime(now);
         courseDao.insert(course);
         return course;
     }
 
     @Override
     public Course update(Course course) {
+        course.setUpdateTime(LocalDateTime.now());
         courseDao.update(course);
         return queryById(course.getId());
     }

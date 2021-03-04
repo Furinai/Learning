@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * 课程实体类
@@ -43,5 +44,13 @@ public class Course implements Serializable {
      * 封面图片地址
      */
     private String coverPhotoUrl;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+    /**
+     * 修改时间
+     */
+    private LocalDateTime updateTime;
 
 }
