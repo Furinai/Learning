@@ -30,4 +30,4 @@ spring:
         - id: course-service
           uri: lb://course-service
           predicates:
-            - Path=/api/courses/**,/api/categories/**
+            - Path=/api/courses/**,/api/categories/**,/api/chapters/**

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.course.dao.ChapterDao">
+
+    <resultMap type="cn.linter.learning.course.entity.Chapter" id="ChapterMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="videoUrl" column="video_url"/>
+        <result property="videoTime" column="video_time"/>
+        <result property="textContent" column="text_content"/>
+        <result property="courseId" column="course_id"/>
+    </resultMap>
+
+    <!--通过ID查询单个章节-->
+    <select id="selectById" resultMap="ChapterMap">
+        select id, title, video_url, video_time, text_content, course_id
+        from chapter
+        where id = #{id}
+    </select>
+
+    <!--查询所有章节-->
+    <select id="list" resultMap="ChapterMap">
+        select id, title, video_url, video_time, text_content, course_id
+        from chapter
+    </select>
+
+    <!--通过课程ID查询所有章节-->
+    <select id="listByCourseId" resultMap="ChapterMap">
+        select id, title, video_url, video_time, text_content, course_id
+        from chapter
+        where course_id = #{courseId}
+    </select>
+
+    <!--通过章节实体查询所有章节-->
+    <select id="listByEntity" resultMap="ChapterMap">
+        select id, title, video_url, video_time, text_content, course_id
+        from chapter
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="videoUrl != null and videoUrl != ''">
+                and video_url = #{videoUrl}
+            </if>
+            <if test="videoTime != null and videoTime != ''">
+                and video_time = #{videoTime}
+            </if>
+            <if test="textContent != null and textContent != ''">
+                and text_content = #{textContent}
+            </if>
+            <if test="courseId != null and courseId != ''">
+                and course_id = #{courseId}
+            </if>
+        </where>
+    </select>
+
+    <!--插入单个章节-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into chapter(title, video_url, video_time, text_content, course_id)
+        values (#{title}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId})
+    </insert>
+
+    <!--更新章节-->
+    <update id="update">
+        update chapter
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="videoUrl != null and videoUrl != ''">
+                video_url = #{videoUrl},
+            </if>
+            <if test="videoTime != null and videoTime != ''">
+                video_time = #{videoTime},
+            </if>
+            <if test="textContent != null and textContent != ''">
+                text_content = #{textContent},
+            </if>
+            <if test="courseId != null and courseId != ''">
+                course_id = #{courseId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除章节-->
+    <delete id="delete">
+        delete
+        from chapter
+        where id = #{id}
+    </delete>
+
+</mapper>
