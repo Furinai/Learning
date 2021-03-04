@@ -38,7 +38,7 @@ public class Course implements Serializable {
     /**
      * 教师ID
      */
-    private Long teacherId;
+    private User teacher;
     /**
      * 封面图片地址
      */

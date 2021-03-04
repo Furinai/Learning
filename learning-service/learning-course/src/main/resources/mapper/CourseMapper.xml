@@ -7,29 +7,68 @@
         <result property="name" column="name"/>
         <result property="price" column="price"/>
         <result property="description" column="description"/>
-        <result property="teacherId" column="teacher_id"/>
         <result property="coverPhotoUrl" column="cover_photo_url"/>
+        <association property="teacher" javaType="cn.linter.learning.course.entity.User">
+            <id property="id" column="tid"/>
+            <result property="username" column="username"/>
+            <result property="fullName" column="full_name"/>
+            <result property="profilePicture" column="profile_picture"/>
+        </association>
     </resultMap>
 
     <!--通过ID查询单个-->
     <select id="selectById" resultMap="CourseMap">
-        select id, name, price, description, teacher_id, cover_photo_url
-        from course
-        where id = #{id}
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.teacher_id,
+               c.cover_photo_url,
+               u.id tid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from course c
+                 join user u
+                      on c.teacher_id = u.id
+        where c.id = #{id}
     </select>
 
     <!--查询所有-->
     <select id="list" resultMap="CourseMap">
-        select id, name, price, description, teacher_id, cover_photo_url
-        from course
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.teacher_id,
+               c.cover_photo_url,
+               u.id tid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from course c
+                 join user u
+                      on c.teacher_id = u.id
     </select>
 
     <!--通过分类ID查询所有-->
     <select id="listByCategoryId" resultMap="CourseMap">
-        select c.id, c.name, c.price, c.description, c.teacher_id, c.cover_photo_url
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.teacher_id,
+               c.cover_photo_url,
+               u.id tid,
+               u.username,
+               u.full_name,
+               u.profile_picture
         from course c
+                 join user u
+                      on c.teacher_id = u.id
         <if test="categoryId != null">
-            join category_course cc on c.id = cc.course_id
+            join category_course cc
+                on c.id = cc.course_id
             where cc.category_id = #{categoryId}
         </if>
         <if test="orderBy !=null">
@@ -39,8 +78,19 @@
 
     <!--通过实体查询所有-->
     <select id="listByEntity" resultMap="CourseMap">
-        select id, name, price, description, teacher_id, cover_photo_url
-        from course
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.teacher_id,
+               c.cover_photo_url,
+               u.id tid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from course c
+                 join user u
+                      on c.teacher_id = u.id
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -51,14 +101,8 @@
             <if test="price != null">
                 and price = #{price}
             </if>
-            <if test="description != null and description != ''">
-                and description = #{description}
-            </if>
             <if test="teacherId != null">
-                and teacher_id = #{teacherId}
-            </if>
-            <if test="coverPhotoUrl != null and coverPhotoUrl != ''">
-                and cover_photo_url = #{coverPhotoUrl}
+                and teacher_id = #{teacher.id}
             </if>
         </where>
     </select>
@@ -66,7 +110,7 @@
     <!--插入单个-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into course(name, price, description, teacher_id, cover_photo_url)
-        values (#{name}, #{price}, #{description}, #{teacherId}, #{coverPhotoUrl})
+        values (#{name}, #{price}, #{description}, #{teacher.id}, #{coverPhotoUrl})
     </insert>
 
     <!--更新-->
