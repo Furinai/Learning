@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.course.dao.AnswerDao">
+
+    <resultMap type="cn.linter.learning.course.entity.Answer" id="AnswerMap">
+        <result property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="questionId" column="question_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="author" javaType="cn.linter.learning.course.entity.User">
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="fullName" column="full_name"/>
+            <result property="profilePicture" column="profile_picture"/>
+        </association>
+    </resultMap>
+
+    <!--通过ID查询单个答案-->
+    <select id="selectById" resultMap="AnswerMap">
+        select a.id,
+               a.content,
+               a.user_name,
+               a.question_id,
+               a.create_time,
+               a.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from answer a
+                 join user u on u.username = a.user_name
+        where a.id = #{id}
+    </select>
+
+    <!--查询所有答案-->
+    <select id="list" resultMap="AnswerMap">
+        select a.id,
+               a.content,
+               a.user_name,
+               a.question_id,
+               a.create_time,
+               a.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from answer a
+                 join user u on u.username = a.user_name
+    </select>
+
+    <!--通过课程ID查询所有答案-->
+    <select id="listByQuestionId" resultMap="AnswerMap">
+        select a.id,
+               a.content,
+               a.user_name,
+               a.question_id,
+               a.create_time,
+               a.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from answer a
+                 join user u on u.username = a.user_name
+        where a.question_id = #{questionId}
+    </select>
+
+    <!--插入单个答案-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into answer(content, user_name, question_id, create_time, update_time)
+        values (#{content}, #{author.username}, #{questionId}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--更新答案-->
+    <update id="update">
+        update answer
+        <if test="content != null and content != ''">
+            content = #{content},
+        </if>
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <!--删除答案-->
+    <delete id="delete">
+        delete
+        from answer
+        where id = #{id}
+    </delete>
+
+</mapper>

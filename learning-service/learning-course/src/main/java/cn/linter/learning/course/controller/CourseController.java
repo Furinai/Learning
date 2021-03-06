@@ -5,8 +5,10 @@ import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
 import cn.linter.learning.course.entity.Chapter;
 import cn.linter.learning.course.entity.Course;
+import cn.linter.learning.course.entity.Question;
 import cn.linter.learning.course.service.ChapterService;
 import cn.linter.learning.course.service.CourseService;
+import cn.linter.learning.course.service.QuestionService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +26,13 @@ public class CourseController {
 
     private final CourseService courseService;
     private final ChapterService chapterService;
+    private final QuestionService questionService;
 
-    public CourseController(CourseService courseService, ChapterService chapterService) {
+    public CourseController(CourseService courseService, ChapterService chapterService,
+                            QuestionService questionService) {
         this.courseService = courseService;
         this.chapterService = chapterService;
+        this.questionService = questionService;
     }
 
     @GetMapping("{id}")
@@ -40,9 +45,16 @@ public class CourseController {
         return Result.of(ResultStatus.SUCCESS, chapterService.listByCourseId(id));
     }
 
+    @GetMapping("{id}/questions")
+    public Result<Page<Question>> listQuestionsOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+                                                        @PathVariable("id") Long id, @RequestParam(defaultValue = "create_time") String orderBy) {
+        PageInfo<Question> pageInfo = questionService.listByCourseId(pageNumber, pageSize, id, orderBy);
+        return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
+    }
+
     @GetMapping
     public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
-                                           @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String orderBy) {
+                                           @RequestParam(required = false) Integer categoryId, @RequestParam(defaultValue = "create_time") String orderBy) {
         PageInfo<Course> pageInfo = courseService.listByCategoryId(pageNumber, pageSize, categoryId, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }

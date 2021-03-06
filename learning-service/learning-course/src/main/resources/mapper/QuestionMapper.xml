@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.course.dao.QuestionDao">
+
+    <resultMap type="cn.linter.learning.course.entity.Question" id="QuestionMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="courseId" column="course_id"/>
+        <result property="answerCount" column="answer_count"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="author" javaType="cn.linter.learning.course.entity.User">
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="fullName" column="full_name"/>
+            <result property="profilePicture" column="profile_picture"/>
+        </association>
+    </resultMap>
+
+    <!--通过ID查询单个问题-->
+    <select id="selectById" resultMap="QuestionMap">
+        select q.id,
+               q.title,
+               q.content,
+               q.user_name,
+               q.course_id,
+               q.answer_count,
+               q.create_time,
+               q.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from question q
+                 join user u on u.username =  q.user_name
+        where q.id = #{id}
+    </select>
+
+    <!--查询所有问题-->
+    <select id="list" resultMap="QuestionMap">
+        select q.id,
+               q.title,
+               q.content,
+               q.user_name,
+               q.course_id,
+               q.answer_count,
+               q.create_time,
+               q.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from question q
+                 join user u on u.username =  q.user_name
+    </select>
+
+    <!--通过课程ID查询所有问题-->
+    <select id="listByCourseId" resultMap="QuestionMap">
+        select q.id,
+               q.title,
+               q.content,
+               q.user_name,
+               q.course_id,
+               q.answer_count,
+               q.create_time,
+               q.update_time,
+               u.id uid,
+               u.username,
+               u.fu`ll_name,
+               u.profile_picture
+        from question q
+                 join user u on u.username = q.user_name
+        where course_id = #{courseId}
+        order by q.${orderBy} desc
+    </select>
+
+    <!--插入单个问题-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into question(title, content, user_name, course_id, answer_count, create_time, update_time)
+        values (#{title}, #{content}, #{author.username}, #{courseId}, #{answerCount}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--更新问题-->
+    <update id="update">
+        update question
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="content != null and content != ''">
+            content = #{content},
+        </if>
+        <if test="answerCount != null">
+            answer_count = #{answerCount},
+        </if>
+        <if test="author != null">
+            user_name = #{author.username},
+        </if>
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <!--删除问题-->
+    <delete id="delete">
+        delete
+        from question
+        where id = #{id}
+    </delete>
+
+</mapper>
