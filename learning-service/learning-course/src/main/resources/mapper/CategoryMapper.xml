@@ -21,23 +21,6 @@
         from category
     </select>
 
-    <!--通过分类实体查询所有分类-->
-    <select id="listByEntity" resultMap="CategoryMap">
-        select id, name, parent_id
-        from category
-        <where>
-            <if test="id != null">
-                and id = #{id}
-            </if>
-            <if test="name != null and name != ''">
-                and name = #{name}
-            </if>
-            <if test="parentId != null">
-                and parent_id = #{parentId}
-            </if>
-        </where>
-    </select>
-
     <!--插入单个分类-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into category(name, parent_id)

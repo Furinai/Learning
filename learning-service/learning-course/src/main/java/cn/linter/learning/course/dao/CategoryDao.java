@@ -30,14 +30,6 @@ public interface CategoryDao {
     List<Category> list();
 
     /**
-     * 通过分类实例查询所有分类
-     *
-     * @param category 分类实例
-     * @return 分类列表
-     */
-    List<Category> listByEntity(Category category);
-
-    /**
      * 新增分类
      *
      * @param category 分类实例

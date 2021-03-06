@@ -38,14 +38,6 @@ public interface ChapterDao {
     List<Chapter> listByCourseId(Long courseId);
 
     /**
-     * 通过章节实例查询所有章节
-     *
-     * @param chapter 章节实例
-     * @return 章节列表
-     */
-    List<Chapter> listByEntity(Chapter chapter);
-
-    /**
      * 新增章节
      *
      * @param chapter 章节实例
