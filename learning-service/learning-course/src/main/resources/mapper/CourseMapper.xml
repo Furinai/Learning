@@ -7,11 +7,12 @@
         <result property="name" column="name"/>
         <result property="price" column="price"/>
         <result property="description" column="description"/>
+        <result property="averageScore" column="average_score"/>
         <result property="coverPhotoUrl" column="cover_photo_url"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <association property="teacher" javaType="cn.linter.learning.course.entity.User">
-            <id property="id" column="tid"/>
+            <id property="id" column="uid"/>
             <result property="username" column="username"/>
             <result property="fullName" column="full_name"/>
             <result property="profilePicture" column="profile_picture"/>
@@ -24,17 +25,18 @@
                c.name,
                c.price,
                c.description,
-               c.teacher_id,
+               c.user_name,
+               c.average_score,
                c.cover_photo_url,
                c.create_time,
                c.update_time,
-               u.id tid,
+               u.id uid,
                u.username,
                u.full_name,
                u.profile_picture
         from course c
                  join user u
-                      on c.teacher_id = u.id
+                      on c.user_name = u.username
         where c.id = #{id}
     </select>
 
@@ -44,17 +46,18 @@
                c.name,
                c.price,
                c.description,
-               c.teacher_id,
+               c.user_name,
+               c.average_score,
                c.cover_photo_url,
                c.create_time,
                c.update_time,
-               u.id tid,
+               u.id uid,
                u.username,
                u.full_name,
                u.profile_picture
         from course c
                  join user u
-                      on c.teacher_id = u.id
+                      on c.user_name = u.username
     </select>
 
     <!--通过分类ID查询所有-->
@@ -63,64 +66,32 @@
                c.name,
                c.price,
                c.description,
-               c.teacher_id,
+               c.user_name,
+               c.average_score,
                c.cover_photo_url,
                c.create_time,
                c.update_time,
-               u.id tid,
+               u.id uid,
                u.username,
                u.full_name,
                u.profile_picture
         from course c
                  join user u
-                      on c.teacher_id = u.id
+                      on c.user_name = u.username
         <if test="categoryId != null">
                  join category_course cc
                       on c.id = cc.course_id
         where cc.category_id = #{categoryId}
         </if>
-        <if test="orderBy !=null">
-            order by #{orderBy}
-        </if>
-    </select>
-
-    <!--通过实体查询所有-->
-    <select id="listByEntity" resultMap="CourseMap">
-        select c.id,
-               c.name,
-               c.price,
-               c.description,
-               c.teacher_id,
-               c.cover_photo_url,
-               c.create_time,
-               c.update_time,
-               u.id tid,
-               u.username,
-               u.full_name,
-               u.profile_picture
-        from course c
-                 join user u
-                      on c.teacher_id = u.id
-        <where>
-            <if test="id != null">
-                and c.id = #{id}
-            </if>
-            <if test="name != null and name != ''">
-                and c.name = #{name}
-            </if>
-            <if test="price != null">
-                and c.price = #{price}
-            </if>
-            <if test="teacherId != null">
-                and c.teacher_id = #{teacher.id}
-            </if>
-        </where>
+        order by ${orderBy} desc
     </select>
 
     <!--插入单个-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into course(name, price, description, teacher_id, cover_photo_url, create_time, update_time)
-        values (#{name}, #{price}, #{description}, #{teacher.id}, #{coverPhotoUrl}, #{createTime}, #{updateTime})
+        insert into course(name, price, description, user_name, average_score, cover_photo_url, create_time,
+                           update_time)
+        values (#{name}, #{price}, #{description}, #{teacher.username}, #{averageScore}, #{coverPhotoUrl},
+                #{createTime}, #{updateTime})
     </insert>
 
     <!--更新-->
@@ -135,8 +106,11 @@
         <if test="description != null and description != ''">
             description = #{description},
         </if>
-        <if test="teacherId != null">
-            teacher_id = #{teacherId},
+        <if test="teacher != null">
+            user_name = #{teacher.username},
+        </if>
+        <if test="averageScore != null">
+            average_score = #{averageScore},
         </if>
         <if test="coverPhotoUrl != null and coverPhotoUrl != ''">
             cover_photo_url = #{coverPhotoUrl},

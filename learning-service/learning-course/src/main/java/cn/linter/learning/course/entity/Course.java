@@ -41,6 +41,10 @@ public class Course implements Serializable {
      */
     private User teacher;
     /**
+     * 平均评分
+     */
+    private Short averageScore;
+    /**
      * 封面图片地址
      */
     private String coverPhotoUrl;
