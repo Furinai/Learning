@@ -67,7 +67,7 @@
                q.update_time,
                u.id uid,
                u.username,
-               u.fu`ll_name,
+               u.full_name,
                u.profile_picture
         from question q
                  join user u on u.username = q.user_name
