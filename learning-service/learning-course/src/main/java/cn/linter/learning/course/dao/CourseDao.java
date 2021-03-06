@@ -2,6 +2,7 @@ package cn.linter.learning.course.dao;
 
 import cn.linter.learning.course.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -36,15 +37,7 @@ public interface CourseDao {
      * @param orderBy    排序
      * @return 列表
      */
-    List<Course> listByCategoryId(Integer categoryId, String orderBy);
-
-    /**
-     * 通过实例查询所有
-     *
-     * @param course 课程实例
-     * @return 课程列表
-     */
-    List<Course> listByEntity(Course course);
+    List<Course> listByCategoryId(@Param("categoryId") Integer categoryId, @Param("orderBy") String orderBy);
 
     /**
      * 新增课程
