@@ -75,6 +75,7 @@
     <!--更新答案-->
     <update id="update">
         update answer
+        set
         <if test="content != null and content != ''">
             content = #{content},
         </if>

@@ -84,6 +84,7 @@
     <!--更新问题-->
     <update id="update">
         update question
+        set
         <if test="title != null and title != ''">
             title = #{title},
         </if>

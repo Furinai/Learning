@@ -97,6 +97,7 @@
     <!--更新-->
     <update id="update">
         update course
+        set
         <if test="name != null and name != ''">
             name = #{name},
         </if>
