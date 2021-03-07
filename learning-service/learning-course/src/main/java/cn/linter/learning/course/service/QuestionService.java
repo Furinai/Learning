@@ -24,7 +24,7 @@ public interface QuestionService {
      *
      * @param pageNumber 页号
      * @param pageSize   页大小
-     * @param categoryId 课程ID
+     * @param courseId   课程ID
      * @param orderBy    排序
      * @return 问题列表
      */
