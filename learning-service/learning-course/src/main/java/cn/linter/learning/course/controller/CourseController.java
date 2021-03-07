@@ -4,14 +4,8 @@ import cn.linter.learning.common.entity.Page;
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
 import cn.linter.learning.common.utils.JwtUtil;
-import cn.linter.learning.course.entity.Chapter;
-import cn.linter.learning.course.entity.Course;
-import cn.linter.learning.course.entity.Note;
-import cn.linter.learning.course.entity.Question;
-import cn.linter.learning.course.service.ChapterService;
-import cn.linter.learning.course.service.CourseService;
-import cn.linter.learning.course.service.NoteService;
-import cn.linter.learning.course.service.QuestionService;
+import cn.linter.learning.course.entity.*;
+import cn.linter.learning.course.service.*;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +25,15 @@ public class CourseController {
     private final ChapterService chapterService;
     private final QuestionService questionService;
     private final NoteService noteService;
+    private final EvaluationService evaluationService;
 
     public CourseController(CourseService courseService, ChapterService chapterService,
-                            QuestionService questionService, NoteService noteService) {
+                            QuestionService questionService, NoteService noteService, EvaluationService evaluationService) {
         this.courseService = courseService;
         this.chapterService = chapterService;
         this.questionService = questionService;
         this.noteService = noteService;
+        this.evaluationService = evaluationService;
     }
 
     @GetMapping("{id}")
@@ -66,6 +62,13 @@ public class CourseController {
             username = JwtUtil.getUsername(token);
         }
         PageInfo<Note> pageInfo = noteService.listByCourseId(pageNumber, pageSize, id, username);
+        return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
+    }
+
+    @GetMapping("{id}/evaluations")
+    public Result<Page<Evaluation>> listEvaluationsOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+                                                            @PathVariable("id") Long id) {
+        PageInfo<Evaluation> pageInfo = evaluationService.listByCourseId(pageNumber, pageSize, id);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
