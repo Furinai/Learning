@@ -61,4 +61,12 @@ public interface EvaluationDao {
      */
     int delete(Long id);
 
+    /**
+     * 删除评价
+     *
+     * @param courseId 课程ID
+     * @return 平均评分
+     */
+    Short selectAverageScoreByCourseId(Long courseId);
+
 }

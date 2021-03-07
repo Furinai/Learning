@@ -97,4 +97,11 @@
         where id = #{id}
     </delete>
 
+    <!--通过课程ID查询平均评分-->
+    <select id="selectAverageScoreByCourseId" resultType="short">
+        SELECT floor(avg(score))
+        from evaluation
+        where course_id = #{courseId}
+    </select>
+
 </mapper>
