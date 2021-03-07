@@ -40,3 +40,4 @@ spring:
                 - /api/chapters/**
                 - /api/questions/**
                 - /api/answers/**
+                - /api/notes/**
