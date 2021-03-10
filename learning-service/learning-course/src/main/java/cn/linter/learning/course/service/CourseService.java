@@ -20,6 +20,15 @@ public interface CourseService {
     Course queryById(Long id);
 
     /**
+     * 通过ID查询单个课程
+     *
+     * @param id       课程ID
+     * @param username 用户名
+     * @return 单个课程
+     */
+    Course queryById(Long id, String username);
+
+    /**
      * 分页查询所有课程
      *
      * @param pageNumber 页号
@@ -29,15 +38,16 @@ public interface CourseService {
     PageInfo<Course> list(int pageNumber, int pageSize);
 
     /**
-     * 通过分类ID分页查询所有课程
+     * 通过分类ID或用户名分页查询所有课程
      *
      * @param pageNumber 页号
      * @param pageSize   页大小
      * @param categoryId 分类ID
+     * @param username   用户名
      * @param orderBy    排序
      * @return 课程列表
      */
-    PageInfo<Course> listByCategoryId(int pageNumber, int pageSize, Integer categoryId, String orderBy);
+    PageInfo<Course> listByCategoryIdOrUsername(int pageNumber, int pageSize, Integer categoryId, String username, String orderBy);
 
     /**
      * 新增课程

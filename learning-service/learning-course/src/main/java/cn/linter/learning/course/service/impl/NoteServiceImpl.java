@@ -31,9 +31,9 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public PageInfo<Note> listByCourseId(int pageNumber, int pageSize, Long courseId, String username) {
+    public PageInfo<Note> listByCourseIdOrUsername(int pageNumber, int pageSize, Long courseId, String username) {
         PageHelper.startPage(pageNumber, pageSize);
-        return PageInfo.of(noteDao.listByCourseId(courseId, username));
+        return PageInfo.of(noteDao.listByCourseIdOrUsername(courseId, username));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cn.linter.learning.course.entity;
+package cn.linter.learning.user.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class Course implements Serializable {
 
-    private static final long serialVersionUID = -38543796891982620L;
+    private static final long serialVersionUID = -1643655146233502915L;
     /**
      * 课程ID
      */

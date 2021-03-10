@@ -37,8 +37,11 @@ public class CourseController {
     }
 
     @GetMapping("{id}")
-    public Result<Course> queryCourse(@PathVariable("id") Long id) {
-        return Result.of(ResultStatus.SUCCESS, courseService.queryById(id));
+    public Result<Course> queryCourse(@PathVariable("id") Long id, @RequestHeader(value = "Authorization", required = false) String token) {
+        if (token == null) {
+            return Result.of(ResultStatus.SUCCESS, courseService.queryById(id));
+        }
+        return Result.of(ResultStatus.SUCCESS, courseService.queryById(id, JwtUtil.getUsername(token)));
     }
 
     @GetMapping("{id}/chapters")
@@ -56,12 +59,12 @@ public class CourseController {
     @GetMapping("{id}/notes")
     public Result<Page<Note>> listNotesOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
                                                 @PathVariable("id") Long id, @RequestParam(defaultValue = "false") Boolean onlyOwn,
-                                                @RequestHeader("Authorization") String token) {
+                                                @RequestHeader(value = "Authorization", required = false) String token) {
         String username = null;
-        if (onlyOwn) {
+        if (onlyOwn && token != null) {
             username = JwtUtil.getUsername(token);
         }
-        PageInfo<Note> pageInfo = noteService.listByCourseId(pageNumber, pageSize, id, username);
+        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNumber, pageSize, id, username);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
@@ -74,8 +77,9 @@ public class CourseController {
 
     @GetMapping
     public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
-                                           @RequestParam(required = false) Integer categoryId, @RequestParam(defaultValue = "create_time") String orderBy) {
-        PageInfo<Course> pageInfo = courseService.listByCategoryId(pageNumber, pageSize, categoryId, orderBy);
+                                           @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String username,
+                                           @RequestParam(defaultValue = "create_time") String orderBy) {
+        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrUsername(pageNumber, pageSize, categoryId, username, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

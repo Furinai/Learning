@@ -30,15 +30,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Course queryById(Long id, String username) {
+        Course course = courseDao.selectById(id);
+        if (username != null) {
+            Boolean attended = courseDao.selectRelationByUsernameAndCourseId(username, id);
+            course.setAttended(attended);
+        }
+        return course;
+    }
+
+    @Override
     public PageInfo<Course> list(int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         return PageInfo.of(courseDao.list());
     }
 
     @Override
-    public PageInfo<Course> listByCategoryId(int pageNumber, int pageSize, Integer categoryId, String orderBy) {
+    public PageInfo<Course> listByCategoryIdOrUsername(int pageNumber, int pageSize, Integer categoryId, String username, String orderBy) {
         PageHelper.startPage(pageNumber, pageSize);
-        return PageInfo.of(courseDao.listByCategoryId(categoryId, orderBy));
+        return PageInfo.of(courseDao.listByCategoryIdOrUsername(categoryId, username, orderBy));
     }
 
     @Override

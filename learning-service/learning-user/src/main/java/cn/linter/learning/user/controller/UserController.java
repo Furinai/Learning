@@ -3,6 +3,9 @@ package cn.linter.learning.user.controller;
 import cn.linter.learning.common.entity.Page;
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
+import cn.linter.learning.user.client.CourseClient;
+import cn.linter.learning.user.entity.Course;
+import cn.linter.learning.user.entity.Note;
 import cn.linter.learning.user.entity.User;
 import cn.linter.learning.user.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -20,15 +23,29 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final CourseClient courseClient;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CourseClient courseClient) {
         this.userService = userService;
+        this.courseClient = courseClient;
     }
 
     @GetMapping("{username}")
     public Result<User> queryUser(@PathVariable String username) {
         User user = userService.queryByUsername(username);
         return Result.of(ResultStatus.SUCCESS, user);
+    }
+
+    @GetMapping("{username}/courses")
+    public Result<Page<Course>> listCoursesOfUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+                                                  @PathVariable String username) {
+        return courseClient.listCoursesByUsername(pageNumber, pageSize, username);
+    }
+
+    @GetMapping("{username}/notes")
+    public Result<Page<Note>> listNotesOfUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+                                              @PathVariable String username) {
+        return courseClient.listNotesByUsername(pageNumber, pageSize, username);
     }
 
     @GetMapping

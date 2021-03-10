@@ -34,10 +34,11 @@ public interface CourseDao {
      * 通过分类ID查询所有课程
      *
      * @param categoryId 分类ID
+     * @param username   用户名
      * @param orderBy    排序
      * @return 列表
      */
-    List<Course> listByCategoryId(@Param("categoryId") Integer categoryId, @Param("orderBy") String orderBy);
+    List<Course> listByCategoryIdOrUsername(@Param("categoryId") Integer categoryId, @Param("username") String username, @Param("orderBy") String orderBy);
 
     /**
      * 新增课程
@@ -62,5 +63,14 @@ public interface CourseDao {
      * @return 影响行数
      */
     int delete(Long id);
+
+    /**
+     * 通过用户名和课程ID查询关系
+     *
+     * @param username 用户名
+     * @param courseId 课程ID
+     * @return 是否存在
+     */
+    Boolean selectRelationByUsernameAndCourseId(@Param("username") String username, @Param("courseId") Long courseId);
 
 }

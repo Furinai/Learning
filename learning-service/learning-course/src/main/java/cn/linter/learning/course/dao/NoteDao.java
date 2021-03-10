@@ -37,7 +37,7 @@ public interface NoteDao {
      * @param username 用户名
      * @return 笔记列表
      */
-    List<Note> listByCourseId(@Param("courseId") Long courseId, @Param("username") String username);
+    List<Note> listByCourseIdOrUsername(@Param("courseId") Long courseId, @Param("username") String username);
 
     /**
      * 新增笔记
