@@ -38,6 +38,10 @@ public class User implements UserDetails {
      */
     private String emailAddress;
     /**
+     * 头像
+     */
+    private String profilePicture;
+    /**
      * 角色
      */
     private Role role;
@@ -64,6 +68,14 @@ public class User implements UserDetails {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public Role getRole() {
