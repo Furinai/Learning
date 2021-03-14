@@ -47,9 +47,9 @@ public interface UserService {
     /**
      * 删除用户
      *
-     * @param id 用户ID
+     * @param username 用户名
      * @return 是否成功
      */
-    boolean delete(Long id);
+    boolean delete(String username);
 
 }

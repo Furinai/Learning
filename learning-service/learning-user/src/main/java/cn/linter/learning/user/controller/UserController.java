@@ -65,9 +65,9 @@ public class UserController {
         return Result.of(ResultStatus.SUCCESS, updatedUser);
     }
 
-    @DeleteMapping("{id}")
-    public ResultStatus deleteUser(@PathVariable Long id) {
-        userService.delete(id);
+    @DeleteMapping("{username}")
+    public ResultStatus deleteUser(@PathVariable String username) {
+        userService.delete(username);
         return ResultStatus.SUCCESS;
     }
 

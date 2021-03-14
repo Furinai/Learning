@@ -94,14 +94,14 @@
             profile_picture = #{profilePicture},
         </if>
         update_time = #{updateTime}
-        where id = #{id}
+        where username = #{username}
     </update>
 
     <!--删除用户-->
     <delete id="delete">
         delete
         from user
-        where id = #{id}
+        where username = #{username}
     </delete>
 
 </mapper>

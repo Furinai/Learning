@@ -48,9 +48,9 @@ public interface UserDao {
     /**
      * 删除用户
      *
-     * @param id 用户ID
+     * @param username 用户名
      * @return 影响行数
      */
-    int delete(Long id);
+    int delete(String username);
 
 }

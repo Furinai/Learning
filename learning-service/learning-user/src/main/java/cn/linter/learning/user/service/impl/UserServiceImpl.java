@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        return userDao.delete(id) > 0;
+    public boolean delete(String username) {
+        return userDao.delete(username) > 0;
     }
 
 }
