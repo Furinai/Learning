@@ -45,11 +45,12 @@ public interface CourseService {
      * @param categoryId  分类ID
      * @param teacherName 教师用户名
      * @param studentName 学生用户名
+     * @param approved    审核通过
      * @param orderBy     排序
      * @return 课程列表
      */
     PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNumber, int pageSize, Integer categoryId,
-                                                                String teacherName, String studentName, String orderBy);
+                                                                String teacherName, String studentName, Boolean approved, String orderBy);
 
     /**
      * 新增课程

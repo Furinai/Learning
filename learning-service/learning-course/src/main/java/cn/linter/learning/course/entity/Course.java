@@ -51,7 +51,11 @@ public class Course implements Serializable {
     /**
      * 封面图片地址
      */
-    private String coverPhotoUrl;
+    private String coverPicture;
+    /**
+     * 审核通过
+     */
+    private Boolean approved;
     /**
      * 创建时间
      */

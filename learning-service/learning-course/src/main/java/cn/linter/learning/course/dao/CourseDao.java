@@ -36,11 +36,13 @@ public interface CourseDao {
      * @param categoryId  分类ID
      * @param teacherName 教师用户名
      * @param studentName 学生用户名
+     * @param approved     审核通过
      * @param orderBy     排序
      * @return 课程列表
      */
     List<Course> listByCategoryIdOrTeacherNameOrStudentName(@Param("categoryId") Integer categoryId, @Param("teacherName") String teacherName,
-                                                            @Param("studentName") String studentName, @Param("orderBy") String orderBy);
+                                                            @Param("studentName") String studentName, @Param("approved") Boolean approved,
+                                                            @Param("orderBy") String orderBy);
 
     /**
      * 新增课程

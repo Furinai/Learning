@@ -78,8 +78,10 @@ public class CourseController {
     @GetMapping
     public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
                                            @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String teacherName,
-                                           @RequestParam(value = "studentName", required = false) String studentName, @RequestParam(defaultValue = "create_time") String orderBy) {
-        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrTeacherNameOrStudentName(pageNumber, pageSize, categoryId, teacherName, studentName, orderBy);
+                                           @RequestParam(required = false) String studentName, @RequestParam(defaultValue = "false") Boolean approved,
+                                           @RequestParam(defaultValue = "create_time") String orderBy) {
+        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrTeacherNameOrStudentName(pageNumber, pageSize,
+                categoryId, teacherName, studentName, approved, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

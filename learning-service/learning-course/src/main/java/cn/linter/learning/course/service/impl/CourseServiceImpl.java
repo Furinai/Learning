@@ -47,9 +47,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNumber, int pageSize, Integer categoryId,
-                                                                       String teacherName, String studentName, String orderBy) {
+                                                                       String teacherName, String studentName,
+                                                                       Boolean approved, String orderBy) {
         PageHelper.startPage(pageNumber, pageSize);
-        return PageInfo.of(courseDao.listByCategoryIdOrTeacherNameOrStudentName(categoryId, teacherName, studentName, orderBy));
+        return PageInfo.of(courseDao.listByCategoryIdOrTeacherNameOrStudentName(categoryId,
+                teacherName, studentName, approved, orderBy));
     }
 
     @Override
@@ -57,6 +59,8 @@ public class CourseServiceImpl implements CourseService {
         LocalDateTime now = LocalDateTime.now();
         course.setCreateTime(now);
         course.setUpdateTime(now);
+        course.setApproved(false);
+        course.setAverageScore((short) 0);
         courseDao.insert(course);
         return course;
     }

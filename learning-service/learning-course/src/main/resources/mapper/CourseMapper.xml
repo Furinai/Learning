@@ -8,7 +8,8 @@
         <result property="price" column="price"/>
         <result property="description" column="description"/>
         <result property="averageScore" column="average_score"/>
-        <result property="coverPhotoUrl" column="cover_photo_url"/>
+        <result property="coverPicture" column="cover_picture"/>
+        <result property="approved" column="approved"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <association property="teacher" javaType="cn.linter.learning.course.entity.User">
@@ -27,7 +28,8 @@
                c.description,
                c.user_name,
                c.average_score,
-               c.cover_photo_url,
+               c.cover_picture,
+               c.approved,
                c.create_time,
                c.update_time,
                u.id uid,
@@ -48,7 +50,8 @@
                c.description,
                c.user_name,
                c.average_score,
-               c.cover_photo_url,
+               c.cover_picture,
+               c.approved,
                c.create_time,
                c.update_time,
                u.id uid,
@@ -68,7 +71,8 @@
                c.description,
                c.user_name,
                c.average_score,
-               c.cover_photo_url,
+               c.cover_picture,
+               c.approved,
                c.create_time,
                c.update_time,
                u.id uid,
@@ -92,16 +96,19 @@
             <if test="teacherName != null">
                 c.user_name = #{teacherName}
             </if>
+            <if test="approved != null and approved != false">
+                c.approved = #{approved}
+            </if>
         </where>
         order by ${orderBy} desc
     </select>
 
     <!--插入单个-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into course(name, price, description, user_name, average_score, cover_photo_url, create_time,
-                           update_time)
-        values (#{name}, #{price}, #{description}, #{teacher.username}, #{averageScore}, #{coverPhotoUrl},
-                #{createTime}, #{updateTime})
+        insert into course(name, price, description, user_name, average_score, cover_picture, approved,
+                           create_time, update_time)
+        values (#{name}, #{price}, #{description}, #{teacher.username}, #{averageScore}, #{coverPicture},
+                #{approved}, #{createTime}, #{updateTime})
     </insert>
 
     <!--更新-->
@@ -123,8 +130,11 @@
         <if test="averageScore != null">
             average_score = #{averageScore},
         </if>
-        <if test="coverPhotoUrl != null and coverPhotoUrl != ''">
-            cover_photo_url = #{coverPhotoUrl},
+        <if test="coverPicture != null and coverPicture != ''">
+            cover_picture = #{coverPicture},
+        </if>
+        <if test="approved != null">
+            approved = #{approved},
         </if>
         update_time = #{updateTime}
         where id = #{id}
