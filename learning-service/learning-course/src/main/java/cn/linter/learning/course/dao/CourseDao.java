@@ -31,14 +31,16 @@ public interface CourseDao {
     List<Course> list();
 
     /**
-     * 通过分类ID查询所有课程
+     * 通过分类ID或教师用户名或学生用户名分页查询所有课程
      *
-     * @param categoryId 分类ID
-     * @param username   用户名
-     * @param orderBy    排序
-     * @return 列表
+     * @param categoryId  分类ID
+     * @param teacherName 教师用户名
+     * @param studentName 学生用户名
+     * @param orderBy     排序
+     * @return 课程列表
      */
-    List<Course> listByCategoryIdOrUsername(@Param("categoryId") Integer categoryId, @Param("username") String username, @Param("orderBy") String orderBy);
+    List<Course> listByCategoryIdOrTeacherNameOrStudentName(@Param("categoryId") Integer categoryId, @Param("teacherName") String teacherName,
+                                                            @Param("studentName") String studentName, @Param("orderBy") String orderBy);
 
     /**
      * 新增课程

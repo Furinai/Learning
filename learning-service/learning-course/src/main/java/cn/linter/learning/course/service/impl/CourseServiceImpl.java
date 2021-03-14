@@ -46,9 +46,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageInfo<Course> listByCategoryIdOrUsername(int pageNumber, int pageSize, Integer categoryId, String username, String orderBy) {
+    public PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNumber, int pageSize, Integer categoryId,
+                                                                       String teacherName, String studentName, String orderBy) {
         PageHelper.startPage(pageNumber, pageSize);
-        return PageInfo.of(courseDao.listByCategoryIdOrUsername(categoryId, username, orderBy));
+        return PageInfo.of(courseDao.listByCategoryIdOrTeacherNameOrStudentName(categoryId, teacherName, studentName, orderBy));
     }
 
     @Override

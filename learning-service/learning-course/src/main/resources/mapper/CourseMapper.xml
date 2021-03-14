@@ -60,8 +60,8 @@
                       on c.user_name = u.username
     </select>
 
-    <!--通过分类ID查询所有-->
-    <select id="listByCategoryIdOrUsername" resultMap="CourseMap">
+    <!--通过分类ID或教师用户名或学生用户名分页查询所有课程-->
+    <select id="listByCategoryIdOrTeacherNameOrStudentName" resultMap="CourseMap">
         select c.id,
                c.name,
                c.price,
@@ -81,13 +81,16 @@
         <if test="categoryId != null">
                  join category_course cc
                       on c.id = cc.course_id
+                 and cc.category_id = #{categoryId}
+        </if>
+        <if test="studentName != null">
+                 join user_course uc
+                      on c.id = uc.course_id
+                 and uc.user_name = #{studentName}
         </if>
         <where>
-            <if test="categoryId != null">
-                cc.category_id = #{categoryId}
-            </if>
-            <if test="username != null">
-                c.user_name = #{username}
+            <if test="teacherName != null">
+                c.user_name = #{teacherName}
             </if>
         </where>
         order by ${orderBy} desc

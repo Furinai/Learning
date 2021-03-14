@@ -38,16 +38,18 @@ public interface CourseService {
     PageInfo<Course> list(int pageNumber, int pageSize);
 
     /**
-     * 通过分类ID或用户名分页查询所有课程
+     * 通过分类ID或教师用户名或学生用户名分页查询所有课程
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
-     * @param categoryId 分类ID
-     * @param username   用户名
-     * @param orderBy    排序
+     * @param pageNumber  页号
+     * @param pageSize    页大小
+     * @param categoryId  分类ID
+     * @param teacherName 教师用户名
+     * @param studentName 学生用户名
+     * @param orderBy     排序
      * @return 课程列表
      */
-    PageInfo<Course> listByCategoryIdOrUsername(int pageNumber, int pageSize, Integer categoryId, String username, String orderBy);
+    PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNumber, int pageSize, Integer categoryId,
+                                                                String teacherName, String studentName, String orderBy);
 
     /**
      * 新增课程

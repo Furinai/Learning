@@ -20,13 +20,13 @@ public interface CourseClient {
     /**
      * 查询用户
      *
-     * @param pageNumber 页码
-     * @param pageSize   页大小
-     * @param username   用户名
+     * @param pageNumber  页码
+     * @param pageSize    页大小
+     * @param studentName 学生用户名
      * @return 用户
      */
     @GetMapping("courses")
-    Result<Page<Course>> listCoursesByUsername(@RequestParam int pageNumber, @RequestParam int pageSize, @RequestParam String username);
+    Result<Page<Course>> listCoursesByStudentName(@RequestParam int pageNumber, @RequestParam int pageSize, @RequestParam String studentName);
 
     /**
      * 查询用户

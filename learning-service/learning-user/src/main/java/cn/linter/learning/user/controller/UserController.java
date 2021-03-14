@@ -38,8 +38,8 @@ public class UserController {
 
     @GetMapping("{username}/courses")
     public Result<Page<Course>> listCoursesOfUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
-                                                  @PathVariable String username) {
-        return courseClient.listCoursesByUsername(pageNumber, pageSize, username);
+                                                  @PathVariable("username") String studentName) {
+        return courseClient.listCoursesByStudentName(pageNumber, pageSize, studentName);
     }
 
     @GetMapping("{username}/notes")
