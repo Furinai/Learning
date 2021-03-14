@@ -30,6 +30,11 @@ public class FileController {
         return Result.of(ResultStatus.SUCCESS, fileService.uploadVideo(multipartFile));
     }
 
+    @PostMapping("cover-pictures")
+    public Result<String> uploadCoverPicture(@RequestParam MultipartFile multipartFile) throws Exception {
+        return Result.of(ResultStatus.SUCCESS, fileService.uploadCoverPicture(multipartFile));
+    }
+
     @PostMapping("profile-pictures")
     public Result<String> uploadProfilePicture(@RequestParam MultipartFile multipartFile, @RequestHeader("Authorization") String token) throws Exception {
         return Result.of(ResultStatus.SUCCESS, fileService.uploadProfilePicture(multipartFile, JwtUtil.getUsername(token)));

@@ -47,12 +47,14 @@ spring:
           predicates:
             - name: Path
               args:
-                - /api/profile-pictures/**
                 - /api/videos/**
+                - /api/cover-pictures/**
+                - /api/profile-pictures/**
         - id: dfs
           uri: http://localhost:9000
           predicates:
             - name: Path
               args:
-                - /dfs/profile-pictures/**
                 - /dfs/videos/**
+                - /dfs/cover-pictures/**
+                - /dfs/profile-pictures/**

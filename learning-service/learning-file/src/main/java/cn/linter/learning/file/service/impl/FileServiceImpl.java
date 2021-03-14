@@ -28,6 +28,8 @@ public class FileServiceImpl implements FileService {
     private String gatewayAddress;
     @Value("${minio.video-bucket-name}")
     private String videoBucketName;
+    @Value("${minio.cover-picture-bucket-name}")
+    private String coverPictureBucketName;
     @Value("${minio.profile-picture-bucket-name}")
     private String profilePictureBucketName;
 
@@ -36,15 +38,15 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String uploadVideo(MultipartFile multipartFile) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
-        makeBucket(videoBucketName);
-        String fileName = multipartFile.getOriginalFilename();
-        String fileType = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
-        String randomName = UUID.randomUUID().toString();
-        minioClient.putObject(PutObjectArgs.builder().bucket(profilePictureBucketName).object(randomName + "." + fileType)
-                .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                .contentType(multipartFile.getContentType()).build());
-        return gatewayAddress + "/dfs/" + videoBucketName + "/" + randomName + "." + fileType;
+    public String uploadVideo(MultipartFile multipartFile) throws IOException, InvalidKeyException, InvalidResponseException,
+            InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+        return saveMultipartFileWithRandomName(multipartFile, videoBucketName);
+    }
+
+    @Override
+    public String uploadCoverPicture(MultipartFile multipartFile) throws IOException, InvalidKeyException, InvalidResponseException,
+            InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+        return saveMultipartFileWithRandomName(multipartFile, coverPictureBucketName);
     }
 
     @Override
@@ -57,6 +59,18 @@ public class FileServiceImpl implements FileService {
                 .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
                 .contentType(multipartFile.getContentType()).build());
         return gatewayAddress + "/dfs/" + profilePictureBucketName + "/" + username + "." + fileType;
+    }
+
+    private String saveMultipartFileWithRandomName(MultipartFile multipartFile, String bucketName) throws IOException, InvalidKeyException, InvalidResponseException,
+            InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+        makeBucket(bucketName);
+        String fileName = multipartFile.getOriginalFilename();
+        String fileType = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
+        String randomName = UUID.randomUUID().toString();
+        minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(randomName + "." + fileType)
+                .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
+                .contentType(multipartFile.getContentType()).build());
+        return gatewayAddress + "/dfs/" + bucketName + "/" + randomName + "." + fileType;
     }
 
     private void makeBucket(String bucketName) throws IOException, InvalidKeyException, InvalidResponseException,

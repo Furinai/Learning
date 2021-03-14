@@ -21,6 +21,11 @@
       "description": "视频存储桶名."
     },
     {
+      "name": "minio.cover-picture-bucket-name",
+      "type": "java.lang.String",
+      "description": "封面存储桶名."
+    },
+    {
       "name": "minio.profile-picture-bucket-name",
       "type": "java.lang.String",
       "description": "头像存储桶名."

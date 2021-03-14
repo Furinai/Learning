@@ -15,6 +15,7 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   video-bucket-name: videos
+  cover-picture-bucket-name: cover-pictures
   profile-picture-bucket-name: profile-pictures
 gateway:
   address: http://localhost:8080
