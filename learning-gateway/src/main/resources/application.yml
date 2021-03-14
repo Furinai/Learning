@@ -42,3 +42,17 @@ spring:
                 - /api/answers/**
                 - /api/notes/**
                 - /api/evaluations/**
+        - id: file-service
+          uri: lb://file-service
+          predicates:
+            - name: Path
+              args:
+                - /api/profile-pictures/**
+                - /api/videos/**
+        - id: dfs
+          uri: http://localhost:9000
+          predicates:
+            - name: Path
+              args:
+                - /dfs/profile-pictures/**
+                - /dfs/videos/**

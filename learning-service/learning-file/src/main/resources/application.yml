@@ -1,0 +1,20 @@
+server:
+  port: 8430
+spring:
+  application:
+    name: file-service
+  servlet:
+    multipart:
+      max-file-size: 100MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  video-bucket-name: videos
+  profile-picture-bucket-name: profile-pictures
+gateway:
+  address: http://localhost:8080
