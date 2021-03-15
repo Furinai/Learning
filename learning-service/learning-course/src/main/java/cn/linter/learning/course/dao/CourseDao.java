@@ -1,5 +1,6 @@
 package cn.linter.learning.course.dao;
 
+import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.entity.Course;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -36,7 +37,7 @@ public interface CourseDao {
      * @param categoryId  分类ID
      * @param teacherName 教师用户名
      * @param studentName 学生用户名
-     * @param approved     审核通过
+     * @param approved    审核通过
      * @param orderBy     排序
      * @return 课程列表
      */
@@ -76,5 +77,22 @@ public interface CourseDao {
      * @return 是否存在
      */
     Boolean selectRelationByUsernameAndCourseId(@Param("username") String username, @Param("courseId") Long courseId);
+
+    /**
+     * 为课程插入分类
+     *
+     * @param courseId   课程ID
+     * @param categories 分类列表
+     * @return 影响行数
+     */
+    int insertCategoryCourseRelation(@Param("courseId") Long courseId, @Param("categories") List<Category> categories);
+
+    /**
+     * 删除课程的分类
+     *
+     * @param courseId 课程ID
+     * @return 影响行数
+     */
+    int deleteCategoryCourseRelation(@Param("courseId") Long courseId);
 
 }

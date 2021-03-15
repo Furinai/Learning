@@ -2,6 +2,7 @@ package cn.linter.learning.course.service.impl;
 
 import cn.linter.learning.course.dao.CourseDao;
 import cn.linter.learning.course.entity.Course;
+import cn.linter.learning.course.entity.User;
 import cn.linter.learning.course.service.CourseService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -55,13 +56,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course create(Course course) {
+    public Course create(Course course, String username) {
         LocalDateTime now = LocalDateTime.now();
-        course.setCreateTime(now);
-        course.setUpdateTime(now);
+        User user = new User();
+        user.setUsername(username);
+        course.setTeacher(user);
         course.setApproved(false);
         course.setAverageScore((short) 0);
+        course.setCreateTime(now);
+        course.setUpdateTime(now);
         courseDao.insert(course);
+        courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
         return course;
     }
 
@@ -69,12 +74,16 @@ public class CourseServiceImpl implements CourseService {
     public Course update(Course course) {
         course.setUpdateTime(LocalDateTime.now());
         courseDao.update(course);
+        courseDao.deleteCategoryCourseRelation(course.getId());
+        courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
         return queryById(course.getId());
     }
 
     @Override
     public boolean delete(Long id) {
-        return courseDao.delete(id) > 0;
+        boolean success= courseDao.delete(id) > 0;
+        courseDao.deleteCategoryCourseRelation(id);
+        return success;
     }
 
 }

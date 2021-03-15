@@ -86,8 +86,8 @@ public class CourseController {
     }
 
     @PostMapping
-    public Result<Course> createCourse(@RequestBody Course course) {
-        return Result.of(ResultStatus.SUCCESS, courseService.create(course));
+    public Result<Course> createCourse(@RequestBody Course course, @RequestHeader("Authorization") String token) {
+        return Result.of(ResultStatus.SUCCESS, courseService.create(course, JwtUtil.getUsername(token)));
     }
 
     @PutMapping
