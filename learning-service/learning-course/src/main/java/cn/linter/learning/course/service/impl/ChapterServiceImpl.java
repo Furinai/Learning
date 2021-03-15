@@ -5,7 +5,9 @@ import cn.linter.learning.course.entity.Chapter;
 import cn.linter.learning.course.service.ChapterService;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * 章节服务实现类
@@ -39,12 +41,18 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter create(Chapter chapter) {
+        if (chapter.getVideoTime() != null) {
+            chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
+        }
         chapterDao.insert(chapter);
         return chapter;
     }
 
     @Override
     public Chapter update(Chapter chapter) {
+        if (chapter.getVideoTime() != null) {
+            chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
+        }
         chapterDao.update(chapter);
         return queryById(chapter.getId());
     }
@@ -52,6 +60,12 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public boolean delete(Long id) {
         return chapterDao.delete(id) > 0;
+    }
+
+    private String transformDuration(String milliseconds) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return format.format(Long.parseLong(milliseconds));
     }
 
 }

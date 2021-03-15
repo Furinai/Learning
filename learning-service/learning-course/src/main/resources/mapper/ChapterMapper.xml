@@ -5,6 +5,7 @@
     <resultMap type="cn.linter.learning.course.entity.Chapter" id="ChapterMap">
         <result property="id" column="id"/>
         <result property="title" column="title"/>
+        <result property="type" column="type"/>
         <result property="videoUrl" column="video_url"/>
         <result property="videoTime" column="video_time"/>
         <result property="textContent" column="text_content"/>
@@ -13,28 +14,28 @@
 
     <!--通过ID查询单个章节-->
     <select id="selectById" resultMap="ChapterMap">
-        select id, title, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id
         from chapter
         where id = #{id}
     </select>
 
     <!--查询所有章节-->
     <select id="list" resultMap="ChapterMap">
-        select id, title, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id
         from chapter
     </select>
 
     <!--通过课程ID查询所有章节-->
     <select id="listByCourseId" resultMap="ChapterMap">
-        select id, title, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id
         from chapter
         where course_id = #{courseId}
     </select>
 
     <!--插入单个章节-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into chapter(title, video_url, video_time, text_content, course_id)
-        values (#{title}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId})
+        insert into chapter(title, type, video_url, video_time, text_content, course_id)
+        values (#{title}, #{type}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId})
     </insert>
 
     <!--更新章节-->
@@ -43,6 +44,9 @@
         <set>
             <if test="title != null and title != ''">
                 title = #{title},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
             </if>
             <if test="videoUrl != null and videoUrl != ''">
                 video_url = #{videoUrl},

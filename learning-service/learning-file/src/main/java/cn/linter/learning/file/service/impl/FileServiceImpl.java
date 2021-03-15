@@ -3,6 +3,7 @@ package cn.linter.learning.file.service.impl;
 import cn.linter.learning.file.service.FileService;
 import io.minio.*;
 import io.minio.errors.*;
+import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 文件服务实现类
@@ -23,6 +27,8 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final MinioClient minioClient;
+    private final ExecutorService executor = new ThreadPoolExecutor(1, 1,
+            60, TimeUnit.SECONDS, new SynchronousQueue<>());
 
     @Value("${gateway.address}")
     private String gatewayAddress;
@@ -67,9 +73,15 @@ public class FileServiceImpl implements FileService {
         String fileName = multipartFile.getOriginalFilename();
         String fileType = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
         String randomName = UUID.randomUUID().toString();
-        minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(randomName + "." + fileType)
-                .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                .contentType(multipartFile.getContentType()).build());
+        executor.execute(() -> {
+            try {
+                minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(randomName + "." + fileType)
+                        .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
+                        .contentType(multipartFile.getContentType()).build());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         return gatewayAddress + "/dfs/" + bucketName + "/" + randomName + "." + fileType;
     }
 

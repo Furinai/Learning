@@ -27,6 +27,10 @@ public class Chapter implements Serializable {
      */
     private String title;
     /**
+     * 内容类型
+     */
+    private String type;
+    /**
      * 视频链接
      */
     private String videoUrl;
