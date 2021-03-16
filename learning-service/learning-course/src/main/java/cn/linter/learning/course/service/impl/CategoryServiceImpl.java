@@ -1,11 +1,11 @@
 package cn.linter.learning.course.service.impl;
 
-import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.dao.CategoryDao;
+import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.service.CategoryService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 分类服务实现类
@@ -28,9 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageInfo<Category> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
-        return PageInfo.of(categoryDao.list());
+    public List<Category> list() {
+        return categoryDao.list();
     }
 
     @Override

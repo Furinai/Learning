@@ -1,7 +1,8 @@
 package cn.linter.learning.course.service;
 
 import cn.linter.learning.course.entity.Category;
-import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * 分类服务接口
@@ -20,13 +21,11 @@ public interface CategoryService {
     Category queryById(Long id);
 
     /**
-     * 分页查询所有分类
+     * 查询所有分类
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
      * @return 分类列表
      */
-    PageInfo<Category> list(int pageNumber, int pageSize);
+    List<Category> list();
 
     /**
      * 新增分类

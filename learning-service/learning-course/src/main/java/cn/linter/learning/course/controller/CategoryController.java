@@ -8,6 +8,8 @@ import cn.linter.learning.course.service.CategoryService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 分类控制器
  *
@@ -30,9 +32,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public Result<Page<Category>> listCategory(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Category> pageInfo = categoryService.list(pageNumber, pageSize);
-        return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
+    public Result<List<Category>> listCategory() {
+        return Result.of(ResultStatus.SUCCESS, categoryService.list());
     }
 
     @PostMapping
