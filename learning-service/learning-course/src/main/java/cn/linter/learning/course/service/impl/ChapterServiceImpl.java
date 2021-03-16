@@ -42,7 +42,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter create(Chapter chapter) {
-        if (chapter.getVideoTime() != null) {
+        if (chapter.getVideoTime() != null && chapter.getVideoTime().indexOf(':') == -1) {
             chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
         }
         LocalDateTime now = LocalDateTime.now();
@@ -54,7 +54,7 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter update(Chapter chapter) {
-        if (chapter.getVideoTime() != null) {
+        if (chapter.getVideoTime() != null && chapter.getVideoTime().indexOf(':') == -1) {
             chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
         }
         chapter.setUpdateTime(LocalDateTime.now());
