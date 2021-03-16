@@ -18,7 +18,7 @@ public interface CategoryService {
      * @param id 分类ID
      * @return 单个分类
      */
-    Category queryById(Long id);
+    Category queryById(Integer id);
 
     /**
      * 查询所有分类
@@ -49,6 +49,6 @@ public interface CategoryService {
      * @param id 分类ID
      * @return 是否成功
      */
-    boolean delete(Long id);
+    boolean delete(Integer id);
 
 }

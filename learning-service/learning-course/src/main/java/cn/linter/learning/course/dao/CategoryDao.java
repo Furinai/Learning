@@ -20,7 +20,7 @@ public interface CategoryDao {
      * @param id 分类ID
      * @return 单个分类
      */
-    Category selectById(Long id);
+    Category selectById(Integer id);
 
     /**
      * 查询所有分类
@@ -51,6 +51,6 @@ public interface CategoryDao {
      * @param id 分类ID
      * @return 影响行数
      */
-    int delete(Long id);
+    int delete(Integer id);
 
 }

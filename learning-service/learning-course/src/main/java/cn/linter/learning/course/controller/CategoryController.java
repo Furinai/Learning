@@ -1,11 +1,9 @@
 package cn.linter.learning.course.controller;
 
-import cn.linter.learning.common.entity.Page;
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
 import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.service.CategoryService;
-import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
-    public Result<Category> queryCategory(@PathVariable("id") Long id) {
+    public Result<Category> queryCategory(@PathVariable("id") Integer id) {
         return Result.of(ResultStatus.SUCCESS, categoryService.queryById(id));
     }
 
@@ -47,7 +45,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("{id}")
-    public ResultStatus deleteCategory(@PathVariable("id") Long id) {
+    public ResultStatus deleteCategory(@PathVariable("id") Integer id) {
         categoryService.delete(id);
         return ResultStatus.SUCCESS;
     }

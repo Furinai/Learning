@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category queryById(Long id) {
+    public Category queryById(Integer id) {
         return categoryDao.selectById(id);
     }
 
@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(Integer id) {
         return categoryDao.delete(id) > 0;
     }
 
