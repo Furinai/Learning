@@ -6,6 +6,7 @@ import cn.linter.learning.course.service.ChapterService;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -44,6 +45,9 @@ public class ChapterServiceImpl implements ChapterService {
         if (chapter.getVideoTime() != null) {
             chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
         }
+        LocalDateTime now = LocalDateTime.now();
+        chapter.setCreateTime(now);
+        chapter.setUpdateTime(now);
         chapterDao.insert(chapter);
         return chapter;
     }
@@ -53,6 +57,7 @@ public class ChapterServiceImpl implements ChapterService {
         if (chapter.getVideoTime() != null) {
             chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
         }
+        chapter.setUpdateTime(LocalDateTime.now());
         chapterDao.update(chapter);
         return queryById(chapter.getId());
     }

@@ -5,6 +5,7 @@ import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.service.CategoryService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,12 +35,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category create(Category category) {
+        LocalDateTime now = LocalDateTime.now();
+        category.setCreateTime(now);
+        category.setUpdateTime(now);
         categoryDao.insert(category);
         return category;
     }
 
     @Override
     public Category update(Category category) {
+        category.setUpdateTime(LocalDateTime.now());
         categoryDao.update(category);
         return queryById(category.getId());
     }

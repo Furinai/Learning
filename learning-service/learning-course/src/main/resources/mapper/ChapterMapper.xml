@@ -10,54 +10,56 @@
         <result property="videoTime" column="video_time"/>
         <result property="textContent" column="text_content"/>
         <result property="courseId" column="course_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <!--通过ID查询单个章节-->
     <select id="selectById" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
         from chapter
         where id = #{id}
     </select>
 
     <!--查询所有章节-->
     <select id="list" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
         from chapter
     </select>
 
     <!--通过课程ID查询所有章节-->
     <select id="listByCourseId" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id
+        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
         from chapter
         where course_id = #{courseId}
     </select>
 
     <!--插入单个章节-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into chapter(title, type, video_url, video_time, text_content, course_id)
-        values (#{title}, #{type}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId})
+        insert into chapter(title, type, video_url, video_time, text_content, course_id, create_time, update_time)
+        values (#{title}, #{type}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId}, #{createTime}, #{updateTime})
     </insert>
 
     <!--更新章节-->
     <update id="update">
         update chapter
-        <set>
-            <if test="title != null and title != ''">
-                title = #{title},
-            </if>
-            <if test="type != null and type != ''">
-                type = #{type},
-            </if>
-            <if test="videoUrl != null and videoUrl != ''">
-                video_url = #{videoUrl},
-            </if>
-            <if test="videoTime != null and videoTime != ''">
-                video_time = #{videoTime},
-            </if>
-            <if test="textContent != null and textContent != ''">
-                text_content = #{textContent},
-            </if>
-        </set>
+        set
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="type != null and type != ''">
+            type = #{type},
+        </if>
+        <if test="videoUrl != null and videoUrl != ''">
+            video_url = #{videoUrl},
+        </if>
+        <if test="videoTime != null and videoTime != ''">
+            video_time = #{videoTime},
+        </if>
+        <if test="textContent != null and textContent != ''">
+            text_content = #{textContent},
+        </if>
+        update_time = #{updateTime}
         where id = #{id}
     </update>
 

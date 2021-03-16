@@ -6,38 +6,40 @@
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="parentId" column="parent_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <!--通过ID查询单个分类-->
     <select id="selectById" resultMap="CategoryMap">
-        select id, name, parent_id
+        select id, name, parent_id, create_time, update_time
         from category
         where id = #{id}
     </select>
 
     <!--查询所有分类-->
     <select id="list" resultMap="CategoryMap">
-        select id, name, parent_id
+        select id, name, parent_id, create_time, update_time
         from category
     </select>
 
     <!--插入单个分类-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into category(name, parent_id)
-        values (#{name}, #{parentId})
+        insert into category(name, parent_id, create_time, update_time)
+        values (#{name}, #{parentId}, #{createTime}, #{updateTime})
     </insert>
 
     <!--更新分类-->
     <update id="update">
         update category
-        <set>
-            <if test="name != null and name != ''">
-                name = #{name},
-            </if>
-            <if test="parentId != null">
-                parent_id = #{parentId},
-            </if>
-        </set>
+        set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="parentId != null">
+            parent_id = #{parentId},
+        </if>
+        update_time = #{updateTime}
         where id = #{id}
     </update>
 
