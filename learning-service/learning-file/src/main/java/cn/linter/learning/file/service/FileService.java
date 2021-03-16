@@ -55,7 +55,6 @@ public interface FileService {
      * 上传头像
      *
      * @param multipartFile 二进制文件
-     * @param username      用户名
      * @return 头像地址
      * @throws IOException               S3操作I/O错误
      * @throws InvalidKeyException       缺少HMAC SHA-256库
@@ -67,7 +66,7 @@ public interface FileService {
      * @throws XmlParserException        XML解析错误
      * @throws ErrorResponseException    S3服务器返回错误响应
      */
-    String uploadProfilePicture(MultipartFile multipartFile, String username) throws IOException, InvalidKeyException, InvalidResponseException,
+    String uploadProfilePicture(MultipartFile multipartFile) throws IOException, InvalidKeyException, InvalidResponseException,
             InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException;
 
 }

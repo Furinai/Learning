@@ -2,10 +2,8 @@ package cn.linter.learning.file.controller;
 
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
-import cn.linter.learning.common.utils.JwtUtil;
 import cn.linter.learning.file.service.FileService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,8 +34,8 @@ public class FileController {
     }
 
     @PostMapping("profile-pictures")
-    public Result<String> uploadProfilePicture(@RequestParam MultipartFile multipartFile, @RequestHeader("Authorization") String token) throws Exception {
-        return Result.of(ResultStatus.SUCCESS, fileService.uploadProfilePicture(multipartFile, JwtUtil.getUsername(token)));
+    public Result<String> uploadProfilePicture(@RequestParam MultipartFile multipartFile) throws Exception {
+        return Result.of(ResultStatus.SUCCESS, fileService.uploadProfilePicture(multipartFile));
     }
 
 }

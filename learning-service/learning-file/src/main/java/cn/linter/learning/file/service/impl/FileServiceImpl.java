@@ -56,15 +56,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String uploadProfilePicture(MultipartFile multipartFile, String username) throws IOException, InvalidKeyException, InvalidResponseException,
+    public String uploadProfilePicture(MultipartFile multipartFile) throws IOException, InvalidKeyException, InvalidResponseException,
             InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
-        makeBucket(profilePictureBucketName);
-        String fileName = multipartFile.getOriginalFilename();
-        String fileType = Objects.requireNonNull(fileName).substring(fileName.lastIndexOf(".") + 1);
-        minioClient.putObject(PutObjectArgs.builder().bucket(profilePictureBucketName).object(username + "." + fileType)
-                .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                .contentType(multipartFile.getContentType()).build());
-        return gatewayAddress + "/dfs/" + profilePictureBucketName + "/" + username + "." + fileType;
+        return saveMultipartFileWithRandomName(multipartFile, profilePictureBucketName);
     }
 
     private String saveMultipartFileWithRandomName(MultipartFile multipartFile, String bucketName) throws IOException, InvalidKeyException, InvalidResponseException,
