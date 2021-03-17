@@ -38,9 +38,9 @@ public class Course implements Serializable {
      */
     private String description;
     /**
-     * 是否参与
+     * 是否报名
      */
-    private Boolean attended;
+    private Boolean registered;
     /**
      * 教师ID
      */

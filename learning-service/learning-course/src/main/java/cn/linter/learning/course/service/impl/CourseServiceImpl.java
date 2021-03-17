@@ -35,10 +35,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course queryById(Long id, String username) {
         Course course = courseDao.selectById(id);
-        if (username != null) {
-            Boolean attended = courseDao.selectRelationByUsernameAndCourseId(username, id);
-            course.setAttended(attended);
-        }
+        course.setRegistered(courseDao.selectRegistration(username, id));
         return course;
     }
 

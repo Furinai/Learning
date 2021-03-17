@@ -76,7 +76,7 @@ public interface CourseDao {
      * @param courseId 课程ID
      * @return 是否存在
      */
-    Boolean selectRelationByUsernameAndCourseId(@Param("username") String username, @Param("courseId") Long courseId);
+    Boolean selectRegistration(@Param("username") String username, @Param("courseId") Long courseId);
 
     /**
      * 为课程插入分类

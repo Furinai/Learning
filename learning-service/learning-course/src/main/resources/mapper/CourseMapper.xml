@@ -155,7 +155,7 @@
     </delete>
 
     <!--通过用户名和课程ID查询关系-->
-    <select id="selectRelationByUsernameAndCourseId" resultType="boolean">
+    <select id="selectRegistration" resultType="boolean">
         select id
         from user_course
         where user_name = #{username}
