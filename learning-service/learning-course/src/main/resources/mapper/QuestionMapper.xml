@@ -108,4 +108,16 @@
         where id = #{id}
     </delete>
 
+    <update id="increaseAnswerCountByQuestionId">
+        update question
+        set answer_count = answer_count + 1
+        where id = #{questionId}
+    </update>
+
+    <update id="decreaseAnswerCountByAnswerId">
+        update question
+        set answer_count = answer_count - 1
+        where id = (select question_id from answer where answer.id = #{answerId})
+    </update>
+
 </mapper>

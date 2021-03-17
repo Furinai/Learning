@@ -3,7 +3,6 @@ package cn.linter.learning.course.service.impl;
 import cn.linter.learning.course.dao.AnswerDao;
 import cn.linter.learning.course.dao.QuestionDao;
 import cn.linter.learning.course.entity.Answer;
-import cn.linter.learning.course.entity.Question;
 import cn.linter.learning.course.entity.User;
 import cn.linter.learning.course.service.AnswerService;
 import com.github.pagehelper.PageHelper;
@@ -48,16 +47,14 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer create(Answer answer, String username) {
-        LocalDateTime now = LocalDateTime.now();
         User user = new User();
         user.setUsername(username);
         answer.setAuthor(user);
+        LocalDateTime now = LocalDateTime.now();
         answer.setCreateTime(now);
         answer.setUpdateTime(now);
         answerDao.insert(answer);
-        Question question = questionDao.selectById(answer.getQuestionId());
-        question.setAnswerCount(question.getAnswerCount() + 1);
-        questionDao.update(question);
+        questionDao.increaseAnswerCountByQuestionId(answer.getQuestionId());
         return answer;
     }
 
@@ -70,12 +67,8 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public boolean delete(Long id) {
-        boolean success = answerDao.delete(id) > 0;
-        Answer answer = answerDao.selectById(id);
-        Question question = questionDao.selectById(answer.getQuestionId());
-        question.setAnswerCount(question.getAnswerCount() - 1);
-        questionDao.update(question);
-        return success;
+        questionDao.decreaseAnswerCountByAnswerId(id);
+        return answerDao.delete(id) > 0;
     }
 
 }

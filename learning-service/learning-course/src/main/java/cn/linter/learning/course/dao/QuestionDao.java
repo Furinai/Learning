@@ -34,7 +34,7 @@ public interface QuestionDao {
      * 通过课程ID查询所有问题
      *
      * @param courseId 课程ID
-     * @param orderBy    排序
+     * @param orderBy  排序
      * @return 问题列表
      */
     List<Question> listByCourseId(@Param("courseId") Long courseId, @Param("orderBy") String orderBy);
@@ -62,5 +62,21 @@ public interface QuestionDao {
      * @return 影响行数
      */
     int delete(Long id);
+
+    /**
+     * 通过问题ID增长答案数量
+     *
+     * @param questionId 问题ID
+     * @return 影响行数
+     */
+    int increaseAnswerCountByQuestionId(Long questionId);
+
+    /**
+     * 通过答案ID减少答案数量
+     *
+     * @param answerId 答案ID
+     * @return 影响行数
+     */
+    int decreaseAnswerCountByAnswerId(Long answerId);
 
 }
