@@ -37,20 +37,20 @@ public class UserController {
     }
 
     @GetMapping("{username}/courses")
-    public Result<Page<Course>> listCoursesOfUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Course>> listCoursesOfUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                   @PathVariable("username") String studentName) {
-        return courseClient.listCoursesByStudentName(pageNumber, pageSize, studentName);
+        return courseClient.listCoursesByStudentName(pageNum, pageSize, studentName);
     }
 
     @GetMapping("{username}/notes")
-    public Result<Page<Note>> listNotesOfUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Note>> listNotesOfUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                               @PathVariable String username) {
-        return courseClient.listNotesByUsername(pageNumber, pageSize, username);
+        return courseClient.listNotesByUsername(pageNum, pageSize, username);
     }
 
     @GetMapping
-    public Result<Page<User>> listUser(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<User> pageInfo = userService.list(pageNumber, pageSize);
+    public Result<Page<User>> listUser(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<User> pageInfo = userService.list(pageNum, pageSize);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

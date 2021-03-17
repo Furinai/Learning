@@ -50,37 +50,37 @@ public class CourseController {
     }
 
     @GetMapping("{id}/questions")
-    public Result<Page<Question>> listQuestionsOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Question>> listQuestionsOfCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                         @PathVariable("id") Long id, @RequestParam(defaultValue = "create_time") String orderBy) {
-        PageInfo<Question> pageInfo = questionService.listByCourseId(pageNumber, pageSize, id, orderBy);
+        PageInfo<Question> pageInfo = questionService.listByCourseId(pageNum, pageSize, id, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @GetMapping("{id}/notes")
-    public Result<Page<Note>> listNotesOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Note>> listNotesOfCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                 @PathVariable("id") Long id, @RequestParam(defaultValue = "false") Boolean onlyOwn,
                                                 @RequestHeader(value = "Authorization", required = false) String token) {
         String username = null;
         if (onlyOwn && token != null) {
             username = JwtUtil.getUsername(token);
         }
-        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNumber, pageSize, id, username);
+        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNum, pageSize, id, username);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @GetMapping("{id}/evaluations")
-    public Result<Page<Evaluation>> listEvaluationsOfCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Evaluation>> listEvaluationsOfCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                             @PathVariable("id") Long id) {
-        PageInfo<Evaluation> pageInfo = evaluationService.listByCourseId(pageNumber, pageSize, id);
+        PageInfo<Evaluation> pageInfo = evaluationService.listByCourseId(pageNum, pageSize, id);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @GetMapping
-    public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                            @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String teacherName,
                                            @RequestParam(required = false) String studentName, @RequestParam(defaultValue = "false") Boolean approved,
                                            @RequestParam(defaultValue = "create_time") String orderBy) {
-        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrTeacherNameOrStudentName(pageNumber, pageSize,
+        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrTeacherNameOrStudentName(pageNum, pageSize,
                 categoryId, teacherName, studentName, approved, orderBy);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }

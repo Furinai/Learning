@@ -31,14 +31,14 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageInfo<Question> listByCourseId(int pageNumber, int pageSize, Long courseId, String orderBy) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Question> listByCourseId(int pageNum, int pageSize, Long courseId, String orderBy) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(questionDao.listByCourseId(courseId, orderBy));
     }
 
     @Override
-    public PageInfo<Question> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Question> list(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(questionDao.list());
     }
 

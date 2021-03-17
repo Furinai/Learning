@@ -31,14 +31,14 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public PageInfo<Note> listByCourseIdOrUsername(int pageNumber, int pageSize, Long courseId, String username) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Note> listByCourseIdOrUsername(int pageNum, int pageSize, Long courseId, String username) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(noteDao.listByCourseIdOrUsername(courseId, username));
     }
 
     @Override
-    public PageInfo<Note> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Note> list(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(noteDao.list());
     }
 

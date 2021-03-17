@@ -22,22 +22,22 @@ public interface QuestionService {
     /**
      * 通过课程ID分页查询所有问题
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
-     * @param courseId   课程ID
-     * @param orderBy    排序
+     * @param pageNum  页号
+     * @param pageSize 页大小
+     * @param courseId 课程ID
+     * @param orderBy  排序
      * @return 问题列表
      */
-    PageInfo<Question> listByCourseId(int pageNumber, int pageSize, Long courseId, String orderBy);
+    PageInfo<Question> listByCourseId(int pageNum, int pageSize, Long courseId, String orderBy);
 
     /**
      * 分页查询所有问题
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 问题列表
      */
-    PageInfo<Question> list(int pageNumber, int pageSize);
+    PageInfo<Question> list(int pageNum, int pageSize);
 
     /**
      * 新增问题

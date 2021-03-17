@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<User> list(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(userDao.list());
     }
 

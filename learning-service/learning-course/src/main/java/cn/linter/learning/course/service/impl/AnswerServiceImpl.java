@@ -34,14 +34,14 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public PageInfo<Answer> listByQuestionId(int pageNumber, int pageSize, Long questionId) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Answer> listByQuestionId(int pageNum, int pageSize, Long questionId) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(answerDao.listByQuestionId(questionId));
     }
 
     @Override
-    public PageInfo<Answer> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Answer> list(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(answerDao.list());
     }
 

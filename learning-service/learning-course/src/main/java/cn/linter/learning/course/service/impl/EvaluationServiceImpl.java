@@ -35,14 +35,14 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     @Override
-    public PageInfo<Evaluation> list(int pageNumber, int pageSize) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Evaluation> list(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(evaluationDao.list());
     }
 
     @Override
-    public PageInfo<Evaluation> listByCourseId(int pageNumber, int pageSize, Long courseId) {
-        PageHelper.startPage(pageNumber, pageSize);
+    public PageInfo<Evaluation> listByCourseId(int pageNum, int pageSize, Long courseId) {
+        PageHelper.startPage(pageNum, pageSize);
         return PageInfo.of(evaluationDao.listByCourseId(courseId));
     }
 

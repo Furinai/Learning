@@ -31,9 +31,9 @@ public class NoteController {
     }
 
     @GetMapping
-    public Result<Page<Note>> listNote(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Note>> listNote(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                        @RequestParam(required = false) String username) {
-        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNumber, pageSize, null, username);
+        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNum, pageSize, null, username);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

@@ -31,16 +31,16 @@ public interface CourseService {
     /**
      * 分页查询所有课程
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 课程列表
      */
-    PageInfo<Course> list(int pageNumber, int pageSize);
+    PageInfo<Course> list(int pageNum, int pageSize);
 
     /**
      * 通过分类ID或教师用户名或学生用户名分页查询所有课程
      *
-     * @param pageNumber  页号
+     * @param pageNum     页号
      * @param pageSize    页大小
      * @param categoryId  分类ID
      * @param teacherName 教师用户名
@@ -49,7 +49,7 @@ public interface CourseService {
      * @param orderBy     排序
      * @return 课程列表
      */
-    PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNumber, int pageSize, Integer categoryId,
+    PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNum, int pageSize, Integer categoryId,
                                                                 String teacherName, String studentName, Boolean approved, String orderBy);
 
     /**

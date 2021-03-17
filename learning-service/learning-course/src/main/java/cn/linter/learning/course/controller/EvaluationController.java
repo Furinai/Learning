@@ -31,8 +31,8 @@ public class EvaluationController {
     }
 
     @GetMapping
-    public Result<Page<Evaluation>> listEvaluation(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Evaluation> pageInfo = evaluationService.list(pageNumber, pageSize);
+    public Result<Page<Evaluation>> listEvaluation(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<Evaluation> pageInfo = evaluationService.list(pageNum, pageSize);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

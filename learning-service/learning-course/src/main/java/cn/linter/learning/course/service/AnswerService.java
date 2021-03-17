@@ -22,21 +22,21 @@ public interface AnswerService {
     /**
      * 通过问题ID分页查询所有答案
      *
-     * @param pageNumber 页号
+     * @param pageNum    页号
      * @param pageSize   页大小
      * @param questionId 问题ID
      * @return 答案列表
      */
-    PageInfo<Answer> listByQuestionId(int pageNumber, int pageSize, Long questionId);
+    PageInfo<Answer> listByQuestionId(int pageNum, int pageSize, Long questionId);
 
     /**
      * 分页查询所有答案
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 答案列表
      */
-    PageInfo<Answer> list(int pageNumber, int pageSize);
+    PageInfo<Answer> list(int pageNum, int pageSize);
 
     /**
      * 新增答案

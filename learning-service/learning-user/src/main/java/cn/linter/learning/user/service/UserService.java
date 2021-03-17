@@ -22,11 +22,11 @@ public interface UserService {
     /**
      * 分页查询所有用户
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 用户列表
      */
-    PageInfo<User> list(int pageNumber, int pageSize);
+    PageInfo<User> list(int pageNum, int pageSize);
 
     /**
      * 新增用户

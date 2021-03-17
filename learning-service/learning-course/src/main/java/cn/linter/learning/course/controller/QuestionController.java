@@ -35,15 +35,15 @@ public class QuestionController {
     }
 
     @GetMapping("{id}/answers")
-    public Result<Page<Answer>> listAnswersOfQuestion(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize,
+    public Result<Page<Answer>> listAnswersOfQuestion(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                       @PathVariable("id") Long id) {
-        PageInfo<Answer> pageInfo = answerService.listByQuestionId(pageNumber, pageSize, id);
+        PageInfo<Answer> pageInfo = answerService.listByQuestionId(pageNum, pageSize, id);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @GetMapping
-    public Result<Page<Question>> listQuestion(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Question> pageInfo = questionService.list(pageNumber, pageSize);
+    public Result<Page<Question>> listQuestion(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<Question> pageInfo = questionService.list(pageNum, pageSize);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

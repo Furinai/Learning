@@ -22,21 +22,21 @@ public interface EvaluationService {
     /**
      * 分页查询所有评价
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 评价列表
      */
-    PageInfo<Evaluation> list(int pageNumber, int pageSize);
+    PageInfo<Evaluation> list(int pageNum, int pageSize);
 
     /**
      * 通过课程ID分页查询所有评价
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
-     * @param courseId   课程ID
+     * @param pageNum  页号
+     * @param pageSize 页大小
+     * @param courseId 课程ID
      * @return 评价列表
      */
-    PageInfo<Evaluation> listByCourseId(int pageNumber, int pageSize, Long courseId);
+    PageInfo<Evaluation> listByCourseId(int pageNum, int pageSize, Long courseId);
 
     /**
      * 新增评价

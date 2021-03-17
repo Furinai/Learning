@@ -22,22 +22,22 @@ public interface NoteService {
     /**
      * 通过课程ID或用户名分页查询所有笔记
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
-     * @param courseId   课程ID
-     * @param username   用户名
+     * @param pageNum  页号
+     * @param pageSize 页大小
+     * @param courseId 课程ID
+     * @param username 用户名
      * @return 笔记列表
      */
-    PageInfo<Note> listByCourseIdOrUsername(int pageNumber, int pageSize, Long courseId, String username);
+    PageInfo<Note> listByCourseIdOrUsername(int pageNum, int pageSize, Long courseId, String username);
 
     /**
      * 分页查询所有笔记
      *
-     * @param pageNumber 页号
-     * @param pageSize   页大小
+     * @param pageNum  页号
+     * @param pageSize 页大小
      * @return 笔记列表
      */
-    PageInfo<Note> list(int pageNumber, int pageSize);
+    PageInfo<Note> list(int pageNum, int pageSize);
 
     /**
      * 新增笔记

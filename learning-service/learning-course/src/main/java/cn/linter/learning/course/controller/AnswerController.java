@@ -31,14 +31,14 @@ public class AnswerController {
     }
 
     @GetMapping
-    public Result<Page<Answer>> listAnswer(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        PageInfo<Answer> pageInfo = answerService.list(pageNumber, pageSize);
+    public Result<Page<Answer>> listAnswer(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize) {
+        PageInfo<Answer> pageInfo = answerService.list(pageNum, pageSize);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @PostMapping
     public Result<Answer> createAnswer(@RequestBody Answer answer, @RequestHeader("Authorization") String token) {
-        return Result.of(ResultStatus.SUCCESS, answerService.create(answer,  JwtUtil.getUsername(token)));
+        return Result.of(ResultStatus.SUCCESS, answerService.create(answer, JwtUtil.getUsername(token)));
     }
 
     @PutMapping
