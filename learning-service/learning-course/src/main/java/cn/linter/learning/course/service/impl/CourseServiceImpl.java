@@ -1,6 +1,7 @@
 package cn.linter.learning.course.service.impl;
 
 import cn.linter.learning.course.dao.CourseDao;
+import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.entity.Course;
 import cn.linter.learning.course.entity.User;
 import cn.linter.learning.course.service.CourseService;
@@ -9,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 课程服务实现类
@@ -74,14 +76,17 @@ public class CourseServiceImpl implements CourseService {
     public Course update(Course course) {
         course.setUpdateTime(LocalDateTime.now());
         courseDao.update(course);
-        courseDao.deleteCategoryCourseRelation(course.getId());
-        courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
+        List<Category> categories = course.getCategories();
+        if (categories != null && !categories.isEmpty()) {
+            courseDao.deleteCategoryCourseRelation(course.getId());
+            courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
+        }
         return queryById(course.getId());
     }
 
     @Override
     public boolean delete(Long id) {
-        boolean success= courseDao.delete(id) > 0;
+        boolean success = courseDao.delete(id) > 0;
         courseDao.deleteCategoryCourseRelation(id);
         return success;
     }
