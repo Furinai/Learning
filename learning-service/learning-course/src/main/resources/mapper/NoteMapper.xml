@@ -47,7 +47,7 @@
     </select>
 
     <!--通过课程ID查询所有笔记-->
-    <select id="listByCourseIdOrUsername" resultMap="NoteMap">
+    <select id="listByCourseId" resultMap="NoteMap">
         select n.id,
                n.content,
                n.user_name,
@@ -59,14 +59,40 @@
                u.profile_picture
         from note n
                  join user u on u.username = n.user_name
-        <where>
-            <if test="courseId != null">
-                and n.course_id = #{courseId}
-            </if>
-            <if test="username != null">
-                and n.user_name = #{username}
-            </if>
-        </where>
+        where n.course_id = #{courseId}
+    </select>
+
+    <!--通过用户名查询所有笔记-->
+    <select id="listByUsername" resultMap="NoteMap">
+        select n.id,
+               n.content,
+               n.user_name,
+               n.create_time,
+               n.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from note n
+                 join user u on u.username = n.user_name
+        where n.user_name = #{username}
+    </select>
+
+    <!--通过课程ID和用户名查询所有笔记-->
+    <select id="listByCourseIdAndUsername" resultMap="NoteMap">
+        select n.id,
+               n.content,
+               n.user_name,
+               n.create_time,
+               n.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from note n
+                 join user u on u.username = n.user_name
+        where n.course_id = #{courseId}
+          and n.user_name = #{username}
     </select>
 
     <!--插入单个笔记-->

@@ -34,10 +34,26 @@ public interface NoteDao {
      * 通过课程ID查询所有笔记
      *
      * @param courseId 课程ID
+     * @return 笔记列表
+     */
+    List<Note> listByCourseId(Long courseId);
+
+    /**
+     * 通过用户名查询所有笔记
+     *
      * @param username 用户名
      * @return 笔记列表
      */
-    List<Note> listByCourseIdOrUsername(@Param("courseId") Long courseId, @Param("username") String username);
+    List<Note> listByUsername(String username);
+
+    /**
+     * 通过课程ID和用户名查询所有笔记
+     *
+     * @param courseId 课程ID
+     * @param username 用户名
+     * @return 笔记列表
+     */
+    List<Note> listByCourseIdAndUsername(@Param("courseId") Long courseId, @Param("username") String username);
 
     /**
      * 新增笔记

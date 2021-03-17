@@ -20,7 +20,27 @@ public interface NoteService {
     Note queryById(Long id);
 
     /**
-     * 通过课程ID或用户名分页查询所有笔记
+     * 通过课程ID分页查询所有笔记
+     *
+     * @param pageNum  页号
+     * @param pageSize 页大小
+     * @param courseId 课程ID
+     * @return 笔记列表
+     */
+    PageInfo<Note> listByCourseId(int pageNum, int pageSize, Long courseId);
+
+    /**
+     * 通过用户名分页查询所有笔记
+     *
+     * @param pageNum  页号
+     * @param pageSize 页大小
+     * @param username 用户名
+     * @return 笔记列表
+     */
+    PageInfo<Note> listByUsername(int pageNum, int pageSize, String username);
+
+    /**
+     * 通过课程ID和用户名分页查询所有笔记
      *
      * @param pageNum  页号
      * @param pageSize 页大小
@@ -28,7 +48,7 @@ public interface NoteService {
      * @param username 用户名
      * @return 笔记列表
      */
-    PageInfo<Note> listByCourseIdOrUsername(int pageNum, int pageSize, Long courseId, String username);
+    PageInfo<Note> listByCourseIdAndUsername(int pageNum, int pageSize, Long courseId, String username);
 
     /**
      * 分页查询所有笔记

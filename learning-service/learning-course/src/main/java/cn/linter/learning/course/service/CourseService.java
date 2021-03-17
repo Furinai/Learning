@@ -36,24 +36,42 @@ public interface CourseService {
      *
      * @param pageNum  页号
      * @param pageSize 页大小
+     * @param approved 审核通过
+     * @param orderBy  排序
      * @return 课程列表
      */
-    PageInfo<Course> list(int pageNum, int pageSize);
+    PageInfo<Course> list(int pageNum, int pageSize, Boolean approved, String orderBy);
 
     /**
-     * 通过分类ID或教师用户名或学生用户名分页查询所有课程
+     * 通过教师用户名分页查询所有课程
      *
      * @param pageNum     页号
      * @param pageSize    页大小
-     * @param categoryId  分类ID
      * @param teacherName 教师用户名
-     * @param studentName 学生用户名
-     * @param approved    审核通过
-     * @param orderBy     排序
      * @return 课程列表
      */
-    PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNum, int pageSize, Integer categoryId,
-                                                                String teacherName, String studentName, Boolean approved, String orderBy);
+    PageInfo<Course> listByTeacherName(int pageNum, int pageSize, String teacherName);
+
+    /**
+     * 通过学生用户名分页查询所有课程
+     *
+     * @param pageNum     页号
+     * @param pageSize    页大小
+     * @param studentName 学生用户名
+     * @return 课程列表
+     */
+    PageInfo<Course> listByStudentName(int pageNum, int pageSize, String studentName);
+
+    /**
+     * 通过分类ID分页查询所有课程
+     *
+     * @param pageNum    页号
+     * @param pageSize   页大小
+     * @param categoryId 分类ID
+     * @param orderBy    排序
+     * @return 课程列表
+     */
+    PageInfo<Course> listByCategoryId(int pageNum, int pageSize, Integer categoryId, String orderBy);
 
     /**
      * 通过ID查询分类列表

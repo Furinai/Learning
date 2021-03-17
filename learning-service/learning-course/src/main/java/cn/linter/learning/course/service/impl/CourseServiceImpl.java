@@ -40,18 +40,27 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageInfo<Course> list(int pageNum, int pageSize) {
+    public PageInfo<Course> list(int pageNum, int pageSize, Boolean approved, String orderBy) {
         PageHelper.startPage(pageNum, pageSize);
-        return PageInfo.of(courseDao.list());
+        return PageInfo.of(courseDao.list(approved, orderBy));
     }
 
     @Override
-    public PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNum, int pageSize, Integer categoryId,
-                                                                       String teacherName, String studentName,
-                                                                       Boolean approved, String orderBy) {
+    public PageInfo<Course> listByTeacherName(int pageNum, int pageSize, String teacherName) {
         PageHelper.startPage(pageNum, pageSize);
-        return PageInfo.of(courseDao.listByCategoryIdOrTeacherNameOrStudentName(categoryId,
-                teacherName, studentName, approved, orderBy));
+        return PageInfo.of(courseDao.listByTeacherName(teacherName));
+    }
+
+    @Override
+    public PageInfo<Course> listByStudentName(int pageNum, int pageSize, String studentName) {
+        PageHelper.startPage(pageNum, pageSize);
+        return PageInfo.of(courseDao.listByStudentName(studentName));
+    }
+
+    @Override
+    public PageInfo<Course> listByCategoryId(int pageNum, int pageSize, Integer categoryId, String orderBy) {
+        PageHelper.startPage(pageNum, pageSize);
+        return PageInfo.of(courseDao.listByCategoryId(categoryId, orderBy));
     }
 
     @Override
@@ -88,9 +97,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean delete(Long id) {
-        boolean success = courseDao.delete(id) > 0;
         courseDao.deleteCategory(id);
-        return success;
+        return courseDao.delete(id) > 0;
     }
 
 }

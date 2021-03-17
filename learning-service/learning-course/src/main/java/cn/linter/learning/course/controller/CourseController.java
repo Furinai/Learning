@@ -65,11 +65,12 @@ public class CourseController {
     public Result<Page<Note>> listNotesOfCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
                                                 @PathVariable("id") Long id, @RequestParam(defaultValue = "false") Boolean onlyOwn,
                                                 @RequestHeader(value = "Authorization", required = false) String token) {
-        String username = null;
-        if (onlyOwn && token != null) {
-            username = JwtUtil.getUsername(token);
+        PageInfo<Note> pageInfo;
+        if (!onlyOwn || token == null) {
+            pageInfo = noteService.listByCourseId(pageNum, pageSize, id);
+        } else {
+            pageInfo = noteService.listByCourseIdAndUsername(pageNum, pageSize, id, JwtUtil.getUsername(token));
         }
-        PageInfo<Note> pageInfo = noteService.listByCourseIdOrUsername(pageNum, pageSize, id, username);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
@@ -82,11 +83,19 @@ public class CourseController {
 
     @GetMapping
     public Result<Page<Course>> listCourse(@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int pageSize,
-                                           @RequestParam(required = false) Integer categoryId, @RequestParam(required = false) String teacherName,
-                                           @RequestParam(required = false) String studentName, @RequestParam(defaultValue = "false") Boolean approved,
-                                           @RequestParam(defaultValue = "create_time") String orderBy) {
-        PageInfo<Course> pageInfo = courseService.listByCategoryIdOrTeacherNameOrStudentName(pageNum, pageSize,
-                categoryId, teacherName, studentName, approved, orderBy);
+                                           @RequestParam(required = false) String teacherName, @RequestParam(required = false) String studentName,
+                                           @RequestParam(required = false) Integer categoryId, @RequestParam(defaultValue = "create_time") String orderBy,
+                                           @RequestParam(defaultValue = "true") Boolean approved) {
+        PageInfo<Course> pageInfo;
+        if (teacherName != null) {
+            pageInfo = courseService.listByTeacherName(pageNum, pageSize, teacherName);
+        } else if (studentName != null) {
+            pageInfo = courseService.listByStudentName(pageNum, pageSize, studentName);
+        } else if (categoryId != null) {
+            pageInfo = courseService.listByCategoryId(pageNum, pageSize, categoryId, orderBy);
+        } else {
+            pageInfo = courseService.list(pageNum, pageSize, approved, orderBy);
+        }
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 

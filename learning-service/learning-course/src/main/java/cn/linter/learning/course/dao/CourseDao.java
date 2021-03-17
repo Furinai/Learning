@@ -27,23 +27,37 @@ public interface CourseDao {
     /**
      * 查询所有课程
      *
+     * @param approved 审核通过
+     * @param orderBy  排序
      * @return 课程列表
      */
-    List<Course> list();
+    List<Course> list(@Param("approved") Boolean approved, @Param("orderBy") String orderBy);
 
     /**
-     * 通过分类ID或教师用户名或学生用户名分页查询所有课程
+     * 通过教师用户名分页查询所有课程
      *
-     * @param categoryId  分类ID
      * @param teacherName 教师用户名
-     * @param studentName 学生用户名
-     * @param approved    审核通过
-     * @param orderBy     排序
      * @return 课程列表
      */
-    List<Course> listByCategoryIdOrTeacherNameOrStudentName(@Param("categoryId") Integer categoryId, @Param("teacherName") String teacherName,
-                                                            @Param("studentName") String studentName, @Param("approved") Boolean approved,
-                                                            @Param("orderBy") String orderBy);
+    List<Course> listByTeacherName(String teacherName);
+
+    /**
+     * 通过学生用户名分页查询所有课程
+     *
+     * @param studentName 学生用户名
+     * @return 课程列表
+     */
+    List<Course> listByStudentName(String studentName);
+
+    /**
+     * 通过分类ID分页查询所有课程
+     *
+     * @param categoryId 分类ID
+     * @param orderBy    排序
+     * @return 课程列表
+     */
+    List<Course> listByCategoryId(@Param("categoryId") Integer categoryId, @Param("orderBy") String orderBy);
+
     /**
      * 通过ID查询分类列表
      *

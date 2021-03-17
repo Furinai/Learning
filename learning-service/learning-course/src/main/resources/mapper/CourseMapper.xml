@@ -60,10 +60,16 @@
         from course c
                  join user u
                       on c.user_name = u.username
+        <where>
+            <if test="approved">
+                c.approved = true
+            </if>
+        </where>
+        order by ${orderBy} desc
     </select>
 
-    <!--通过分类ID或教师用户名或学生用户名分页查询所有课程-->
-    <select id="listByCategoryIdOrTeacherNameOrStudentName" resultMap="CourseMap">
+    <!--通过教师用户名分页查询所有课程-->
+    <select id="listByTeacherName" resultMap="CourseMap">
         select c.id,
                c.name,
                c.price,
@@ -81,24 +87,57 @@
         from course c
                  join user u
                       on c.user_name = u.username
-        <if test="categoryId != null">
-                 join category_course cc
-                      on c.id = cc.course_id
-                 and cc.category_id = #{categoryId}
-        </if>
-        <if test="studentName != null">
+        where c.user_name = #{teacherName}
+    </select>
+
+    <!--通过学生用户名分页查询所有课程-->
+    <select id="listByStudentName" resultMap="CourseMap">
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.user_name,
+               c.average_score,
+               c.cover_picture,
+               c.approved,
+               c.create_time,
+               c.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from course c
+                 join user u
+                      on c.user_name = u.username
                  join user_course uc
                       on c.id = uc.course_id
-                 and uc.user_name = #{studentName}
-        </if>
-        <where>
-            <if test="teacherName != null">
-                c.user_name = #{teacherName}
-            </if>
-            <if test="approved != null and approved != false">
-                c.approved = #{approved}
-            </if>
-        </where>
+        where uc.user_name = #{studentName}
+          and c.approved = true
+    </select>
+
+    <!--通过分类ID分页查询所有课程-->
+    <select id="listByCategoryId" resultMap="CourseMap">
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.user_name,
+               c.average_score,
+               c.cover_picture,
+               c.approved,
+               c.create_time,
+               c.update_time,
+               u.id uid,
+               u.username,
+               u.full_name,
+               u.profile_picture
+        from course c
+                 join user u
+                      on c.user_name = u.username
+                 join category_course cc
+                      on c.id = cc.course_id
+        where cc.category_id = #{categoryId}
+          and c.approved = true
         order by ${orderBy} desc
     </select>
 
