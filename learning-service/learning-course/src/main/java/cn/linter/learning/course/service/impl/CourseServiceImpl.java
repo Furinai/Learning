@@ -55,17 +55,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Category> listCategoryById(Long id) {
+        return courseDao.listCategoryById(id);
+    }
+
+    @Override
     public Course create(Course course, String username) {
-        LocalDateTime now = LocalDateTime.now();
         User user = new User();
         user.setUsername(username);
         course.setTeacher(user);
         course.setApproved(false);
         course.setAverageScore((short) 0);
+        LocalDateTime now = LocalDateTime.now();
         course.setCreateTime(now);
         course.setUpdateTime(now);
         courseDao.insert(course);
-        courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
+        courseDao.insertCategory(course.getId(), course.getCategories());
         return course;
     }
 
@@ -75,8 +80,8 @@ public class CourseServiceImpl implements CourseService {
         courseDao.update(course);
         List<Category> categories = course.getCategories();
         if (categories != null && !categories.isEmpty()) {
-            courseDao.deleteCategoryCourseRelation(course.getId());
-            courseDao.insertCategoryCourseRelation(course.getId(), course.getCategories());
+            courseDao.deleteCategory(course.getId());
+            courseDao.insertCategory(course.getId(), categories);
         }
         return queryById(course.getId());
     }
@@ -84,7 +89,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean delete(Long id) {
         boolean success = courseDao.delete(id) > 0;
-        courseDao.deleteCategoryCourseRelation(id);
+        courseDao.deleteCategory(id);
         return success;
     }
 

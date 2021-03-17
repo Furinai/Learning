@@ -44,6 +44,11 @@ public class CourseController {
         return Result.of(ResultStatus.SUCCESS, courseService.queryById(id, JwtUtil.getUsername(token)));
     }
 
+    @GetMapping("{id}/categories")
+    public Result<List<Category>> listCategoriesOfCourse(@PathVariable("id") Long id) {
+        return Result.of(ResultStatus.SUCCESS, courseService.listCategoryById(id));
+    }
+
     @GetMapping("{id}/chapters")
     public Result<List<Chapter>> listChaptersOfCourse(@PathVariable("id") Long id) {
         return Result.of(ResultStatus.SUCCESS, chapterService.listByCourseId(id));

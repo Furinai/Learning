@@ -1,7 +1,10 @@
 package cn.linter.learning.course.service;
 
+import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.entity.Course;
 import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * 课程服务接口
@@ -51,6 +54,14 @@ public interface CourseService {
      */
     PageInfo<Course> listByCategoryIdOrTeacherNameOrStudentName(int pageNum, int pageSize, Integer categoryId,
                                                                 String teacherName, String studentName, Boolean approved, String orderBy);
+
+    /**
+     * 通过ID查询分类列表
+     *
+     * @param id 课程ID
+     * @return 分类列表
+     */
+    List<Category> listCategoryById(Long id);
 
     /**
      * 新增课程

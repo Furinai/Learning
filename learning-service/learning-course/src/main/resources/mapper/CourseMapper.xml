@@ -18,35 +18,27 @@
             <result property="fullName" column="full_name"/>
             <result property="profilePicture" column="profile_picture"/>
         </association>
-        <collection property="categories" ofType="cn.linter.learning.course.entity.Category">
-            <id property="id" column="category_id"/>
-            <result property="name" column="category_name"/>
-        </collection>
     </resultMap>
 
     <!--通过ID查询单个-->
     <select id="selectById" resultMap="CourseMap">
-        select c1.id,
-               c1.name,
-               c1.price,
-               c1.description,
-               c1.user_name,
-               c1.average_score,
-               c1.cover_picture,
-               c1.approved,
-               c1.create_time,
-               c1.update_time,
+        select c.id,
+               c.name,
+               c.price,
+               c.description,
+               c.user_name,
+               c.average_score,
+               c.cover_picture,
+               c.approved,
+               c.create_time,
+               c.update_time,
                u.id uid,
                u.username,
                u.full_name,
-               u.profile_picture,
-               cc.category_id,
-               c2.name category_name
-        from course c1
-                 join user u on c1.user_name = u.username
-                 join category_course cc on c1.id = cc.course_id
-                 join category c2 on cc.category_id = c2.id
-        where c1.id = #{id}
+               u.profile_picture
+        from course c
+                 join user u on c.user_name = u.username
+        where c.id = #{id}
     </select>
 
     <!--查询所有-->
@@ -162,7 +154,14 @@
           and course_id = #{courseId}
     </select>
 
-    <insert id="insertCategoryCourseRelation">
+    <select id="listCategoryById" resultMap="cn.linter.learning.course.dao.CategoryDao.CategoryMap">
+        select c.id, c.name
+        from category c
+                 join category_course cc on c.id = cc.category_id
+        where cc.course_id = #{id}
+    </select>
+
+    <insert id="insertCategory">
         insert into category_course(course_id, category_id )
         values
         <foreach collection="categories" item="category" separator=",">
@@ -170,7 +169,7 @@
         </foreach>
     </insert>
 
-    <delete id="deleteCategoryCourseRelation">
+    <delete id="deleteCategory">
         delete
         from category_course
         where course_id = #{courseId}

@@ -44,10 +44,10 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note create(Note note, String username) {
-        LocalDateTime now = LocalDateTime.now();
         User user = new User();
         user.setUsername(username);
         note.setAuthor(user);
+        LocalDateTime now = LocalDateTime.now();
         note.setCreateTime(now);
         note.setUpdateTime(now);
         noteDao.insert(note);

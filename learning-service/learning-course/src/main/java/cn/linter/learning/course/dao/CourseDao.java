@@ -44,6 +44,13 @@ public interface CourseDao {
     List<Course> listByCategoryIdOrTeacherNameOrStudentName(@Param("categoryId") Integer categoryId, @Param("teacherName") String teacherName,
                                                             @Param("studentName") String studentName, @Param("approved") Boolean approved,
                                                             @Param("orderBy") String orderBy);
+    /**
+     * 通过ID查询分类列表
+     *
+     * @param id 课程ID
+     * @return 分类列表
+     */
+    List<Category> listCategoryById(Long id);
 
     /**
      * 新增课程
@@ -85,7 +92,7 @@ public interface CourseDao {
      * @param categories 分类列表
      * @return 影响行数
      */
-    int insertCategoryCourseRelation(@Param("courseId") Long courseId, @Param("categories") List<Category> categories);
+    int insertCategory(@Param("courseId") Long courseId, @Param("categories") List<Category> categories);
 
     /**
      * 删除课程的分类
@@ -93,6 +100,6 @@ public interface CourseDao {
      * @param courseId 课程ID
      * @return 影响行数
      */
-    int deleteCategoryCourseRelation(@Param("courseId") Long courseId);
+    int deleteCategory(@Param("courseId") Long courseId);
 
 }

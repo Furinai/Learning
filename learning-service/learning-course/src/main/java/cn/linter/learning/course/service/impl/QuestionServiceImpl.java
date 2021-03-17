@@ -44,11 +44,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question create(Question question, String username) {
-        LocalDateTime now = LocalDateTime.now();
         User user = new User();
         user.setUsername(username);
         question.setAuthor(user);
         question.setAnswerCount(0);
+        LocalDateTime now = LocalDateTime.now();
         question.setCreateTime(now);
         question.setUpdateTime(now);
         questionDao.insert(question);
