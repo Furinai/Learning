@@ -50,8 +50,19 @@ public class CourseController {
     }
 
     @GetMapping("{id}/chapters")
-    public Result<List<Chapter>> listChaptersOfCourse(@PathVariable("id") Long id) {
-        return Result.of(ResultStatus.SUCCESS, chapterService.listByCourseId(id));
+    public Result<List<Chapter>> listChaptersOfCourse(@PathVariable("id") Long id, @RequestHeader(value = "Authorization", required = false) String token) {
+        List<Chapter> chapters;
+        if (token == null) {
+            chapters = chapterService.listInfoByCourseId(id);
+        } else {
+            Course course = courseService.queryById(id, JwtUtil.getUsername(token));
+            if (course.getRegistered()) {
+                chapters = chapterService.listByCourseId(id);
+            } else {
+                chapters = chapterService.listInfoByCourseId(id);
+            }
+        }
+        return Result.of(ResultStatus.SUCCESS, chapters);
     }
 
     @GetMapping("{id}/questions")

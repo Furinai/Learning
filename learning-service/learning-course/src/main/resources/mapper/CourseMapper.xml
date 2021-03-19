@@ -186,8 +186,8 @@
     </delete>
 
     <!--通过用户名和课程ID查询关系-->
-    <select id="selectRegistration" resultType="boolean">
-        select id
+    <select id="selectRegistration" resultType="Boolean">
+        select count(*) > 0
         from user_course
         where user_name = #{username}
           and course_id = #{courseId}

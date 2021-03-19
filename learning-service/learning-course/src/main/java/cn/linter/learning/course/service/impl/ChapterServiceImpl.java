@@ -41,6 +41,11 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    public List<Chapter> listInfoByCourseId(Long courseId) {
+        return chapterDao.listInfoByCourseId(courseId);
+    }
+
+    @Override
     public Chapter create(Chapter chapter) {
         if (chapter.getVideoTime() != null && chapter.getVideoTime().indexOf(':') == -1) {
             chapter.setVideoTime(transformDuration(chapter.getVideoTime()));

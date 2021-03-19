@@ -6,8 +6,8 @@
         <result property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="type" column="type"/>
-        <result property="videoUrl" column="video_url"/>
         <result property="videoTime" column="video_time"/>
+        <result property="videoUrl" column="video_url"/>
         <result property="textContent" column="text_content"/>
         <result property="courseId" column="course_id"/>
         <result property="createTime" column="create_time"/>
@@ -16,28 +16,34 @@
 
     <!--通过ID查询单个章节-->
     <select id="selectById" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
+        select id, title, type, video_time, video_url, text_content, course_id, create_time, update_time
         from chapter
         where id = #{id}
     </select>
 
     <!--查询所有章节-->
     <select id="list" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
+        select id, title, type, video_time, video_url, text_content, course_id, create_time, update_time
         from chapter
     </select>
 
     <!--通过课程ID查询所有章节-->
     <select id="listByCourseId" resultMap="ChapterMap">
-        select id, title, type, video_url, video_time, text_content, course_id, create_time, update_time
+        select id, title, type, video_time, video_url, text_content, course_id, create_time, update_time
+        from chapter
+        where course_id = #{courseId}
+    </select>
+
+    <select id="listInfoByCourseId" resultMap="ChapterMap">
+        select id, title, type, video_time, course_id, create_time, update_time
         from chapter
         where course_id = #{courseId}
     </select>
 
     <!--插入单个章节-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into chapter(title, type, video_url, video_time, text_content, course_id, create_time, update_time)
-        values (#{title}, #{type}, #{videoUrl}, #{videoTime}, #{textContent}, #{courseId}, #{createTime}, #{updateTime})
+        insert into chapter(title, type, video_time, video_url, text_content, course_id, create_time, update_time)
+        values (#{title}, #{type}, #{videoTime}, #{videoUrl}, #{textContent}, #{courseId}, #{createTime}, #{updateTime})
     </insert>
 
     <!--更新章节-->
@@ -50,11 +56,11 @@
         <if test="type != null and type != ''">
             type = #{type},
         </if>
-        <if test="videoUrl != null and videoUrl != ''">
-            video_url = #{videoUrl},
-        </if>
         <if test="videoTime != null and videoTime != ''">
             video_time = #{videoTime},
+        </if>
+        <if test="videoUrl != null and videoUrl != ''">
+            video_url = #{videoUrl},
         </if>
         <if test="textContent != null and textContent != ''">
             text_content = #{textContent},

@@ -36,6 +36,14 @@ public interface ChapterService {
     List<Chapter> listByCourseId(Long courseId);
 
     /**
+     * 通过课程ID查询所有章节信息
+     *
+     * @param courseId 课程ID
+     * @return 章节列表
+     */
+    List<Chapter> listInfoByCourseId(Long courseId);
+
+    /**
      * 新增章节
      *
      * @param chapter 章节实例
