@@ -18,23 +18,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CourseClient {
 
     /**
-     * 查询用户
+     * 通过学会用户名查询课程
      *
      * @param pageNum     页码
      * @param pageSize    页大小
      * @param studentName 学生用户名
-     * @return 用户
+     * @return 课程列表
      */
     @GetMapping("courses")
     Result<Page<Course>> listCoursesByStudentName(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String studentName);
 
     /**
-     * 查询用户
+     * 通过用户名查询笔记
      *
      * @param pageNum  页码
      * @param pageSize 页大小
      * @param username 用户名
-     * @return 用户
+     * @return 笔记列表
      */
     @GetMapping("notes")
     Result<Page<Note>> listNotesByUsername(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String username);
