@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
     public Role update(Role role) {
         role.setUpdateTime(LocalDateTime.now());
         roleDao.update(role);
-        return queryById(role.getId());
+        return roleDao.selectById(role.getId());
     }
 
     @Override

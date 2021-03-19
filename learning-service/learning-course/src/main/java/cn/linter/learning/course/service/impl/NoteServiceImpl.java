@@ -70,7 +70,7 @@ public class NoteServiceImpl implements NoteService {
     public Note update(Note note) {
         note.setUpdateTime(LocalDateTime.now());
         noteDao.update(note);
-        return queryById(note.getId());
+        return noteDao.selectById(note.getId());
     }
 
     @Override

@@ -68,7 +68,7 @@ public class EvaluationServiceImpl implements EvaluationService {
     public Evaluation update(Evaluation evaluation) {
         evaluation.setUpdateTime(LocalDateTime.now());
         evaluationDao.update(evaluation);
-        return queryById(evaluation.getId());
+        return evaluationDao.selectById(evaluation.getId());
     }
 
     @Override

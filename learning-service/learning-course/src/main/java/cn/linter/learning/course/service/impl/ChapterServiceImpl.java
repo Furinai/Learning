@@ -64,7 +64,7 @@ public class ChapterServiceImpl implements ChapterService {
         }
         chapter.setUpdateTime(LocalDateTime.now());
         chapterDao.update(chapter);
-        return queryById(chapter.getId());
+        return chapterDao.selectById(chapter.getId());
     }
 
     @Override

@@ -59,7 +59,7 @@ public class QuestionServiceImpl implements QuestionService {
     public Question update(Question question) {
         question.setUpdateTime(LocalDateTime.now());
         questionDao.update(question);
-        return queryById(question.getId());
+        return questionDao.selectById(question.getId());
     }
 
     @Override

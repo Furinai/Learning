@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Category category) {
         category.setUpdateTime(LocalDateTime.now());
         categoryDao.update(category);
-        return queryById(category.getId());
+        return categoryDao.selectById(category.getId());
     }
 
     @Override

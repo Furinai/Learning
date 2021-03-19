@@ -62,7 +62,7 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer update(Answer answer) {
         answer.setUpdateTime(LocalDateTime.now());
         answerDao.update(answer);
-        return queryById(answer.getId());
+        return answerDao.selectById(answer.getId());
     }
 
     @Override
