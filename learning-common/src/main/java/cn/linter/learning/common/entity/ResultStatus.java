@@ -20,7 +20,7 @@ public enum ResultStatus {
     TOKEN_IS_INVALID("1002", "Token无效"),
     ARGUMENT_NOT_VALID("2000", "参数无效"),
     USER_NOT_FOUND("3000", "用户不存在"),
-    USERNAME_ALREADY_EXISTS("3001", "用户名已存在");
+    USERNAME_EXISTS("3001", "用户名已存在");
 
     /**
      * 状态码

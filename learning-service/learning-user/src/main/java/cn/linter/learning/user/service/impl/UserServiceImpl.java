@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         if (userDao.selectByUsername(user.getUsername()) != null) {
-            throw new BusinessException(ResultStatus.USERNAME_ALREADY_EXISTS);
+            throw new BusinessException(ResultStatus.USERNAME_EXISTS);
         }
         String rawPassword = user.getPassword();
         if (rawPassword != null) {
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public User update(User user) {
         User oldUser = userDao.selectByUsername(user.getUsername());
         if (oldUser != null && !oldUser.getUsername().equals(user.getUsername())) {
-            throw new BusinessException(ResultStatus.USERNAME_ALREADY_EXISTS);
+            throw new BusinessException(ResultStatus.USERNAME_EXISTS);
         }
         String rawPassword = user.getPassword();
         if (rawPassword != null) {
