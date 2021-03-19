@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.linter.learning.trade.dao.OrderDao">
+
+    <resultMap type="cn.linter.learning.trade.entity.Order" id="OrderMap">
+        <result property="id" column="id"/>
+        <result property="price" column="price"/>
+        <result property="username" column="user_name"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <!--通过ID查询单个订单-->
+    <select id="selectById" resultMap="OrderMap">
+        select id,
+               price,
+               user_name,
+               product_id,
+               product_name,
+               create_time,
+               update_time,
+               status
+        from `order`
+        where id = #{id}
+    </select>
+
+    <!--查询所有订单-->
+    <select id="list" resultMap="OrderMap">
+        select id,
+               price,
+               user_name,
+               product_id,
+               product_name,
+               create_time,
+               update_time,
+               status
+        from `order`
+    </select>
+
+    <!--插入单个订单-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into `order`(price, user_name, product_id, product_name, create_time, update_time, status)
+        values (#{price}, #{username}, #{productId}, #{productName}, #{createTime}, #{updateTime}, #{status})
+    </insert>
+
+    <!--更新订单-->
+    <update id="update">
+        update `order`
+        set
+            <if test="status != null">
+                status = #{status},
+            </if>
+        update_time = #{updateTime}
+        where id = #{id}
+    </update>
+
+    <!--删除订单-->
+    <delete id="delete">
+        delete
+        from `order`
+        where id = #{id}
+    </delete>
+
+</mapper>
