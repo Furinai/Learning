@@ -106,4 +106,13 @@ public interface CourseService {
      */
     boolean delete(Long id);
 
+    /**
+     * 插入用户-课程关系
+     *
+     * @param username 用户名
+     * @param courseId 课程ID
+     * @return 课程实例
+     */
+    Course insertRegistration(String username, Long courseId);
+
 }

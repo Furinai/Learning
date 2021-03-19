@@ -92,13 +92,19 @@ public class CourseServiceImpl implements CourseService {
             courseDao.deleteCategory(course.getId());
             courseDao.insertCategory(course.getId(), categories);
         }
-        return queryById(course.getId());
+        return courseDao.selectById(course.getId());
     }
 
     @Override
     public boolean delete(Long id) {
         courseDao.deleteCategory(id);
         return courseDao.delete(id) > 0;
+    }
+
+    @Override
+    public Course insertRegistration(String username, Long courseId) {
+        courseDao.insertRegistration(username, courseId);
+        return courseDao.selectById(courseId);
     }
 
 }

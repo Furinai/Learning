@@ -91,13 +91,22 @@ public interface CourseDao {
     int delete(Long id);
 
     /**
-     * 通过用户名和课程ID查询关系
+     * 查询用户-课程关系
      *
      * @param username 用户名
      * @param courseId 课程ID
      * @return 是否存在
      */
     boolean selectRegistration(@Param("username") String username, @Param("courseId") Long courseId);
+
+    /**
+     * 插入用户-课程关系
+     *
+     * @param username 用户名
+     * @param courseId 课程ID
+     * @return 影响行数
+     */
+    int insertRegistration(@Param("username") String username, @Param("courseId") Long courseId);
 
     /**
      * 为课程插入分类

@@ -141,6 +141,14 @@
         order by ${orderBy} desc
     </select>
 
+    <!--通过ID查询分类列表-->
+    <select id="listCategoryById" resultMap="cn.linter.learning.course.dao.CategoryDao.CategoryMap">
+        select c.id, c.name
+        from category c
+                 join category_course cc on c.id = cc.category_id
+        where cc.course_id = #{id}
+    </select>
+
     <!--插入单个-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into course(name, price, description, user_name, average_score, cover_picture, approved,
@@ -185,7 +193,7 @@
         where id = #{id}
     </delete>
 
-    <!--通过用户名和课程ID查询关系-->
+    <!--查询用户-课程关系-->
     <select id="selectRegistration" resultType="Boolean">
         select count(*) > 0
         from user_course
@@ -193,13 +201,13 @@
           and course_id = #{courseId}
     </select>
 
-    <select id="listCategoryById" resultMap="cn.linter.learning.course.dao.CategoryDao.CategoryMap">
-        select c.id, c.name
-        from category c
-                 join category_course cc on c.id = cc.category_id
-        where cc.course_id = #{id}
-    </select>
+    <!--插入用户-课程关系-->
+    <insert id="insertRegistration">
+        insert into user_course(user_name, course_id)
+        values (#{username}, #{courseId})
+    </insert>
 
+    <!--为课程插入分类-->
     <insert id="insertCategory">
         insert into category_course(course_id, category_id )
         values
@@ -208,6 +216,7 @@
         </foreach>
     </insert>
 
+    <!--删除课程的分类-->
     <delete id="deleteCategory">
         delete
         from category_course

@@ -116,7 +116,10 @@ public class CourseController {
     }
 
     @PutMapping
-    public Result<Course> updateCourse(@RequestBody Course course) {
+    public Result<Course> updateCourse(@RequestBody Course course, @RequestHeader("Authorization") String token) {
+        if (course.getRegistered() != null && course.getRegistered()) {
+            return Result.of(ResultStatus.SUCCESS, courseService.insertRegistration(JwtUtil.getUsername(token), course.getId()));
+        }
         return Result.of(ResultStatus.SUCCESS, courseService.update(course));
     }
 
