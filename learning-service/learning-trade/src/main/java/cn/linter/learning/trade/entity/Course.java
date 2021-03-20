@@ -31,5 +31,9 @@ public class Course implements Serializable {
      * 价格
      */
     private BigDecimal price;
+    /**
+     * 是否报名
+     */
+    private Boolean registered;
 
 }

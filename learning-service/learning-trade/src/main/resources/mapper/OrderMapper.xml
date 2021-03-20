@@ -31,6 +31,22 @@
         where id = #{id}
     </select>
 
+    <!--通过交易编号查询单个订单-->
+    <select id="selectByTradeNo" resultMap="OrderMap">
+        select id,
+               trade_no,
+               price,
+               user_name,
+               product_id,
+               product_name,
+               close_milliseconds,
+               create_time,
+               update_time,
+               status
+        from `order`
+        where trade_no = #{tradeNo}
+    </select>
+
     <!--通过用户名和商品ID查询单个订单-->
     <select id="queryUnpaidByUsernameAndProductId" resultMap="OrderMap">
         select id,

@@ -39,6 +39,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order queryByTradeNo(String tradeNo) {
+        return orderDao.selectByTradeNo(tradeNo);
+    }
+
+    @Override
     public Order queryUnpaidByUsernameAndProductId(String username, Long productId) {
         return orderDao.queryUnpaidByUsernameAndProductId(username, productId);
     }

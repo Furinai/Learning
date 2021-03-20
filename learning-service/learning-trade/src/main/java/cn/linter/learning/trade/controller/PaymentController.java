@@ -3,6 +3,8 @@ package cn.linter.learning.trade.controller;
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
 import cn.linter.learning.common.exception.BusinessException;
+import cn.linter.learning.trade.client.CourseClient;
+import cn.linter.learning.trade.entity.Course;
 import cn.linter.learning.trade.entity.Order;
 import cn.linter.learning.trade.service.OrderService;
 import com.alipay.easysdk.factory.Factory;
@@ -28,9 +30,11 @@ public class PaymentController {
     private String gatewayHost;
 
     private final OrderService orderService;
+    private final CourseClient courseClient;
 
-    public PaymentController(OrderService orderService) {
+    public PaymentController(OrderService orderService, CourseClient courseClient) {
         this.orderService = orderService;
+        this.courseClient = courseClient;
     }
 
     @RequestMapping
@@ -39,7 +43,7 @@ public class PaymentController {
         AlipayTradePagePayResponse pagePayResponse;
         try {
             pagePayResponse = Factory.Payment.Page().pay(
-                    order.getProductName(), orderId.toString(),
+                    order.getProductName(), order.getTradeNo(),
                     order.getPrice().toString(),
                     gatewayProtocol + "://" + gatewayHost + "/api/payments/success"
             );
@@ -47,6 +51,18 @@ public class PaymentController {
             throw new BusinessException(ResultStatus.PAYMENT_CREATE_FAILURE);
         }
         return Result.of(ResultStatus.SUCCESS, pagePayResponse.getBody());
+    }
+
+    @RequestMapping("success")
+    public String paymentSuccess(@RequestParam("out_trade_no") String tradeNo) {
+        Order order = orderService.queryByTradeNo(tradeNo);
+        order.setStatus(1);
+        orderService.update(order);
+        Course course = new Course();
+        course.setId(order.getProductId());
+        course.setRegistered(true);
+        courseClient.updateCourse(course, order.getUsername());
+        return "支付成功，请刷新课程页面";
     }
 
 }

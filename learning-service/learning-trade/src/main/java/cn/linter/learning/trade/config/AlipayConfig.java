@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @since 2021/3/19
  */
 @Component
-public class PaymentConfig implements ApplicationRunner {
+public class AlipayConfig implements ApplicationRunner {
 
     @Value("${alipay.protocol}")
     private String protocol;

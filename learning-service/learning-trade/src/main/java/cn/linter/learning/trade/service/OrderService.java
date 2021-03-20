@@ -22,6 +22,14 @@ public interface OrderService {
     Order queryById(Long id);
 
     /**
+     * 通过交易编号查询单个订单
+     *
+     * @param tradeNo 交易编号
+     * @return 单个订单
+     */
+    Order queryByTradeNo(String tradeNo);
+
+    /**
      * 通过用户名和商品ID查询单个未支付订单
      *
      * @param username  用户名
