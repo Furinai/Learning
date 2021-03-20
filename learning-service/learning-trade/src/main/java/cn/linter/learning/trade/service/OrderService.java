@@ -3,6 +3,8 @@ package cn.linter.learning.trade.service;
 import cn.linter.learning.trade.entity.Order;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * 订单服务接口
  *
@@ -36,6 +38,13 @@ public interface OrderService {
      * @return 订单列表
      */
     PageInfo<Order> list(int pageNumber, int pageSize);
+
+    /**
+     * 查询所有未支付订单
+     *
+     * @return 订单列表
+     */
+    List<Order> listUnpaid();
 
     /**
      * 新增订单

@@ -9,7 +9,7 @@
         <result property="username" column="user_name"/>
         <result property="productId" column="product_id"/>
         <result property="productName" column="product_name"/>
-        <result property="closeTime" column="close_time"/>
+        <result property="closeMilliseconds" column="close_milliseconds"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="status" column="status"/>
@@ -23,7 +23,7 @@
                user_name,
                product_id,
                product_name,
-               close_time,
+               close_milliseconds,
                create_time,
                update_time,
                status
@@ -39,7 +39,7 @@
                user_name,
                product_id,
                product_name,
-               close_time,
+               close_milliseconds,
                create_time,
                update_time,
                status
@@ -57,18 +57,34 @@
                user_name,
                product_id,
                product_name,
-               close_time,
+               close_milliseconds,
                create_time,
                update_time,
                status
         from `order`
     </select>
 
+    <!--查询所有未支付订单-->
+    <select id="listUnpaid" resultMap="OrderMap">
+        select id,
+               trade_no,
+               price,
+               user_name,
+               product_id,
+               product_name,
+               close_milliseconds,
+               create_time,
+               update_time,
+               status
+        from `order`
+        where status = 0
+    </select>
+
     <!--插入单个订单-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into `order`(trade_no, price, user_name, product_id, product_name, close_time,
+        insert into `order`(trade_no, price, user_name, product_id, product_name, close_milliseconds,
                             create_time, update_time, status)
-        values (#{tradeNo}, #{price}, #{username}, #{productId}, #{productName}, #{closeTime},
+        values (#{tradeNo}, #{price}, #{username}, #{productId}, #{productName}, #{closeMilliseconds},
                 #{createTime}, #{updateTime}, #{status})
     </insert>
 

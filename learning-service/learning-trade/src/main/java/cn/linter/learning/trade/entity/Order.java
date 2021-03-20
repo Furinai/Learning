@@ -7,6 +7,8 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 订单实体类
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 @EqualsAndHashCode
-public class Order implements Serializable {
+public class Order implements Delayed, Serializable {
 
     private static final long serialVersionUID = -21147626328522368L;
 
@@ -45,7 +47,7 @@ public class Order implements Serializable {
     /**
      * 关闭时间
      */
-    private LocalDateTime closeTime;
+    private Long closeMilliseconds;
     /**
      * 创建时间
      */
@@ -57,6 +59,16 @@ public class Order implements Serializable {
     /**
      * 状态：0->未支付 1->已支付 2->已关闭
      */
-    private Short status;
+    private Integer status;
+
+    @Override
+    public long getDelay(TimeUnit timeUnit) {
+        return timeUnit.convert(closeMilliseconds - System.currentTimeMillis(), timeUnit);
+    }
+
+    @Override
+    public int compareTo(Delayed delayed) {
+        return (int) (this.getDelay(TimeUnit.MILLISECONDS) - delayed.getDelay(TimeUnit.MILLISECONDS));
+    }
 
 }

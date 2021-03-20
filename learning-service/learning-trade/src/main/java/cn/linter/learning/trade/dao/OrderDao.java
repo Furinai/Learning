@@ -40,6 +40,13 @@ public interface OrderDao {
     List<Order> list();
 
     /**
+     * 查询所有未支付订单
+     *
+     * @return 订单列表
+     */
+    List<Order> listUnpaid();
+
+    /**
      * 新增订单
      *
      * @param order 订单实例

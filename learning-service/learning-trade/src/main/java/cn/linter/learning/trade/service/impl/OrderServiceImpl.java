@@ -10,7 +10,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.DelayQueue;
 
 /**
  * 订单服务实现类
@@ -23,10 +25,12 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
     private final CourseClient courseClient;
+    private final DelayQueue<Order> orderDelayQueue;
 
-    public OrderServiceImpl(OrderDao orderDao, CourseClient courseClient) {
+    public OrderServiceImpl(OrderDao orderDao, CourseClient courseClient, DelayQueue<Order> orderDelayQueue) {
         this.orderDao = orderDao;
         this.courseClient = courseClient;
+        this.orderDelayQueue = orderDelayQueue;
     }
 
     @Override
@@ -46,18 +50,25 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> listUnpaid() {
+        return orderDao.listUnpaid();
+    }
+
+    @Override
     public Order create(Order order, String username) {
         Course course = courseClient.queryCourse(order.getProductId()).getData();
         order.setTradeNo(UUID.randomUUID().toString().replaceAll("-", ""));
         order.setPrice(course.getPrice());
         order.setProductName(course.getName());
         order.setUsername(username);
+        long current = System.currentTimeMillis();
+        order.setCloseMilliseconds(current + 1800000);
         LocalDateTime now = LocalDateTime.now();
-        order.setCloseTime(now.plusMinutes(30));
         order.setCreateTime(now);
         order.setUpdateTime(now);
-        order.setStatus((short) 0);
+        order.setStatus(0);
         orderDao.insert(order);
+        orderDelayQueue.add(order);
         return order;
     }
 
@@ -65,11 +76,15 @@ public class OrderServiceImpl implements OrderService {
     public Order update(Order order) {
         order.setUpdateTime(LocalDateTime.now());
         orderDao.update(order);
+        if (order.getStatus() != null && order.getStatus() != 0) {
+            orderDelayQueue.removeIf(delayOrder -> delayOrder.getId().equals(order.getId()));
+        }
         return orderDao.selectById(order.getId());
     }
 
     @Override
     public boolean delete(Long id) {
+        orderDelayQueue.removeIf(delayOrder -> delayOrder.getId().equals(id));
         return orderDao.delete(id) > 0;
     }
 
