@@ -39,8 +39,8 @@ public class OrderController {
     @PostMapping
     public Result<Order> createOrder(@RequestBody Order order, @RequestHeader("Authorization") String token) {
         String username = JwtUtil.getUsername(token);
-        Order existingOrder = orderService.queryByUsernameAndProductId(username, order.getProductId());
-        if (existingOrder != null && existingOrder.getStatus() == 0) {
+        Order existingOrder = orderService.queryUnpaidByUsernameAndProductId(username, order.getProductId());
+        if (existingOrder != null) {
             return Result.of(ResultStatus.SUCCESS, existingOrder);
         }
         return Result.of(ResultStatus.SUCCESS, orderService.create(order, username));

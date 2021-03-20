@@ -24,13 +24,13 @@ public interface OrderDao {
     Order selectById(Long id);
 
     /**
-     * 通过用户名和商品ID查询单个订单
+     * 通过用户名和商品ID查询单个未支付订单
      *
      * @param username  用户名
      * @param productId 商品ID
      * @return 单个订单
      */
-    Order queryByUsernameAndProductId(@Param("username") String username, @Param("productId") Long productId);
+    Order queryUnpaidByUsernameAndProductId(@Param("username") String username, @Param("productId") Long productId);
 
     /**
      * 查询所有订单

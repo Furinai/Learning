@@ -20,13 +20,13 @@ public interface OrderService {
     Order queryById(Long id);
 
     /**
-     * 通过用户名和商品ID查询单个订单
+     * 通过用户名和商品ID查询单个未支付订单
      *
      * @param username  用户名
      * @param productId 商品ID
      * @return 单个订单
      */
-    Order queryByUsernameAndProductId(String username, Long productId);
+    Order queryUnpaidByUsernameAndProductId(String username, Long productId);
 
     /**
      * 分页查询所有订单

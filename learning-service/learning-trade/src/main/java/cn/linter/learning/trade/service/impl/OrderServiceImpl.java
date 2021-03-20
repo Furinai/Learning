@@ -35,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order queryByUsernameAndProductId(String username, Long productId) {
-        return orderDao.queryByUsernameAndProductId(username, productId);
+    public Order queryUnpaidByUsernameAndProductId(String username, Long productId) {
+        return orderDao.queryUnpaidByUsernameAndProductId(username, productId);
     }
 
     @Override

@@ -32,7 +32,7 @@
     </select>
 
     <!--通过用户名和商品ID查询单个订单-->
-    <select id="queryByUsernameAndProductId" resultMap="OrderMap">
+    <select id="queryUnpaidByUsernameAndProductId" resultMap="OrderMap">
         select id,
                trade_no,
                price,
@@ -46,6 +46,7 @@
         from `order`
         where user_name = #{username}
           and product_id = #{productId}
+          and status = 0
     </select>
 
     <!--查询所有订单-->
