@@ -21,7 +21,7 @@ public interface CourseClient {
      * @param id 课程ID
      * @return 单个课程
      */
-    @GetMapping("{id}")
+    @GetMapping("courses/{id}")
     Result<Course> queryCourse(@PathVariable("id") Long id);
 
 }
