@@ -20,7 +20,9 @@ public enum ResultStatus {
     TOKEN_IS_INVALID("1002", "Token无效"),
     ARGUMENT_NOT_VALID("2000", "参数无效"),
     USER_NOT_FOUND("3000", "用户不存在"),
-    USERNAME_EXISTS("3001", "用户名已存在");
+    USERNAME_EXISTS("3001", "用户名已存在"),
+    COURSE_NOT_BUY("4001", "课程未购买"),
+    PAYMENT_CREATE_FAILURE("5001", "支付创建失败");
 
     /**
      * 状态码

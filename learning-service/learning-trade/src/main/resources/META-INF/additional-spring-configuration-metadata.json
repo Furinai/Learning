@@ -1,0 +1,44 @@
+{
+  "properties": [
+    {
+      "name": "alipay.protocol",
+      "type": "java.lang.String",
+      "description": "协议."
+    },
+    {
+      "name": "alipay.gatewayHost",
+      "type": "java.lang.String",
+      "description": "网关."
+    },
+    {
+      "name": "alipay.appId",
+      "type": "java.lang.String",
+      "description": "AppId."
+    },
+    {
+      "name": "alipay.signType",
+      "type": "java.lang.String",
+      "description": "签名类型."
+    },
+    {
+      "name": "alipay.merchantPrivateKey",
+      "type": "java.lang.String",
+      "description": "应用私钥."
+    },
+    {
+      "name": "alipay.alipayPublicKey",
+      "type": "java.lang.String",
+      "description": "支付宝公钥."
+    },
+    {
+      "name": "gateway.protocol",
+      "type": "java.lang.String",
+      "description": "网关协议."
+    },
+    {
+      "name": "gateway.host",
+      "type": "java.lang.String",
+      "description": "网关地址."
+    }
+  ]
+}
