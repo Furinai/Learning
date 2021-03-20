@@ -20,6 +20,15 @@ public interface OrderService {
     Order queryById(Long id);
 
     /**
+     * 通过用户名和商品ID查询单个订单
+     *
+     * @param username  用户名
+     * @param productId 商品ID
+     * @return 单个订单
+     */
+    Order queryByUsernameAndProductId(String username, Long productId);
+
+    /**
      * 分页查询所有订单
      *
      * @param pageNumber 页号
@@ -31,10 +40,11 @@ public interface OrderService {
     /**
      * 新增订单
      *
-     * @param order 订单实例
+     * @param order    订单实例
+     * @param username 用户名
      * @return 订单实例
      */
-    Order create(Order order);
+    Order create(Order order, String username);
 
     /**
      * 更新订单

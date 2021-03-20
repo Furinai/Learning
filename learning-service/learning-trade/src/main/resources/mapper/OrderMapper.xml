@@ -4,10 +4,12 @@
 
     <resultMap type="cn.linter.learning.trade.entity.Order" id="OrderMap">
         <result property="id" column="id"/>
+        <result property="tradeNo" column="trade_no"/>
         <result property="price" column="price"/>
         <result property="username" column="user_name"/>
         <result property="productId" column="product_id"/>
         <result property="productName" column="product_name"/>
+        <result property="closeTime" column="close_time"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="status" column="status"/>
@@ -16,10 +18,12 @@
     <!--通过ID查询单个订单-->
     <select id="selectById" resultMap="OrderMap">
         select id,
+               trade_no,
                price,
                user_name,
                product_id,
                product_name,
+               close_time,
                create_time,
                update_time,
                status
@@ -27,13 +31,32 @@
         where id = #{id}
     </select>
 
-    <!--查询所有订单-->
-    <select id="list" resultMap="OrderMap">
+    <!--通过用户名和商品ID查询单个订单-->
+    <select id="queryByUsernameAndProductId" resultMap="OrderMap">
         select id,
+               trade_no,
                price,
                user_name,
                product_id,
                product_name,
+               close_time,
+               create_time,
+               update_time,
+               status
+        from `order`
+        where user_name = #{username}
+          and product_id = #{productId}
+    </select>
+
+    <!--查询所有订单-->
+    <select id="list" resultMap="OrderMap">
+        select id,
+               trade_no,
+               price,
+               user_name,
+               product_id,
+               product_name,
+               close_time,
                create_time,
                update_time,
                status
@@ -42,8 +65,10 @@
 
     <!--插入单个订单-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into `order`(price, user_name, product_id, product_name, create_time, update_time, status)
-        values (#{price}, #{username}, #{productId}, #{productName}, #{createTime}, #{updateTime}, #{status})
+        insert into `order`(trade_no, price, user_name, product_id, product_name, close_time,
+                            create_time, update_time, status)
+        values (#{tradeNo}, #{price}, #{username}, #{productId}, #{productName}, #{closeTime},
+                #{createTime}, #{updateTime}, #{status})
     </insert>
 
     <!--更新订单-->

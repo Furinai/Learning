@@ -2,6 +2,7 @@ package cn.linter.learning.trade.dao;
 
 import cn.linter.learning.trade.entity.Order;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,6 +22,15 @@ public interface OrderDao {
      * @return 单个订单
      */
     Order selectById(Long id);
+
+    /**
+     * 通过用户名和商品ID查询单个订单
+     *
+     * @param username  用户名
+     * @param productId 商品ID
+     * @return 单个订单
+     */
+    Order queryByUsernameAndProductId(@Param("username") String username, @Param("productId") Long productId);
 
     /**
      * 查询所有订单

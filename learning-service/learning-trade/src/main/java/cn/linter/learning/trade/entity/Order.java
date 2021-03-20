@@ -23,6 +23,10 @@ public class Order implements Serializable {
 
     private Long id;
     /**
+     * 交易号
+     */
+    private String tradeNo;
+    /**
      * 价格
      */
     private BigDecimal price;
@@ -38,6 +42,10 @@ public class Order implements Serializable {
      * 商品名称
      */
     private String productName;
+    /**
+     * 关闭时间
+     */
+    private LocalDateTime closeTime;
     /**
      * 创建时间
      */

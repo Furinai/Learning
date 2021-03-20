@@ -3,6 +3,7 @@ package cn.linter.learning.trade.controller;
 import cn.linter.learning.common.entity.Page;
 import cn.linter.learning.common.entity.Result;
 import cn.linter.learning.common.entity.ResultStatus;
+import cn.linter.learning.common.utils.JwtUtil;
 import cn.linter.learning.trade.entity.Order;
 import cn.linter.learning.trade.service.OrderService;
 import com.github.pagehelper.PageInfo;
@@ -30,15 +31,19 @@ public class OrderController {
     }
 
     @GetMapping
-    public Result<Page<Order>> listOrder(@RequestParam(defaultValue = "1") int pageNumber,
-                                         @RequestParam(defaultValue = "10") int pageSize) {
+    public Result<Page<Order>> listOrder(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
         PageInfo<Order> pageInfo = orderService.list(pageNumber, pageSize);
         return Result.of(ResultStatus.SUCCESS, Page.of(pageInfo.getList(), pageInfo.getTotal()));
     }
 
     @PostMapping
-    public Result<Order> createOrder(@RequestBody Order order) {
-        return Result.of(ResultStatus.SUCCESS, orderService.create(order));
+    public Result<Order> createOrder(@RequestBody Order order, @RequestHeader("Authorization") String token) {
+        String username = JwtUtil.getUsername(token);
+        Order existingOrder = orderService.queryByUsernameAndProductId(username, order.getProductId());
+        if (existingOrder != null && existingOrder.getStatus() == 0) {
+            return Result.of(ResultStatus.SUCCESS, existingOrder);
+        }
+        return Result.of(ResultStatus.SUCCESS, orderService.create(order, username));
     }
 
     @PutMapping

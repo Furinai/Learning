@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * 订单服务实现类
@@ -34,19 +35,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order queryByUsernameAndProductId(String username, Long productId) {
+        return orderDao.queryByUsernameAndProductId(username, productId);
+    }
+
+    @Override
     public PageInfo<Order> list(int pageNumber, int pageSize) {
         PageHelper.startPage(pageNumber, pageSize);
         return PageInfo.of(orderDao.list());
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order, String username) {
         Course course = courseClient.queryCourse(order.getProductId()).getData();
+        order.setTradeNo(UUID.randomUUID().toString().replaceAll("-", ""));
         order.setPrice(course.getPrice());
         order.setProductName(course.getName());
+        order.setUsername(username);
         LocalDateTime now = LocalDateTime.now();
+        order.setCloseTime(now.plusMinutes(30));
         order.setCreateTime(now);
         order.setUpdateTime(now);
+        order.setStatus((short) 0);
         orderDao.insert(order);
         return order;
     }
@@ -55,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
     public Order update(Order order) {
         order.setUpdateTime(LocalDateTime.now());
         orderDao.update(order);
-        return queryById(order.getId());
+        return orderDao.selectById(order.getId());
     }
 
     @Override
