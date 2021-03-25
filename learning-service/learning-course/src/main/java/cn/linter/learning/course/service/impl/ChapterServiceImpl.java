@@ -5,10 +5,8 @@ import cn.linter.learning.course.entity.Chapter;
 import cn.linter.learning.course.service.ChapterService;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * 章节服务实现类
@@ -47,8 +45,9 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter create(Chapter chapter) {
-        if (chapter.getVideoTime() != null && chapter.getVideoTime().indexOf(':') == -1) {
-            chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
+        String videoTime = chapter.getVideoTime();
+        if (videoTime != null) {
+            chapter.setVideoTime(transformVideoTime(videoTime));
         }
         LocalDateTime now = LocalDateTime.now();
         chapter.setCreateTime(now);
@@ -59,8 +58,9 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Chapter update(Chapter chapter) {
-        if (chapter.getVideoTime() != null && chapter.getVideoTime().indexOf(':') == -1) {
-            chapter.setVideoTime(transformDuration(chapter.getVideoTime()));
+        String videoTime = chapter.getVideoTime();
+        if (videoTime != null) {
+            chapter.setVideoTime(transformVideoTime(videoTime));
         }
         chapter.setUpdateTime(LocalDateTime.now());
         chapterDao.update(chapter);
@@ -72,10 +72,16 @@ public class ChapterServiceImpl implements ChapterService {
         return chapterDao.delete(id) > 0;
     }
 
-    private String transformDuration(String milliseconds) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return format.format(Long.parseLong(milliseconds));
+    private String transformVideoTime(String videoTime) {
+        long duration;
+        try {
+            duration = Long.parseLong(videoTime);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("参数异常");
+        }
+        long minutes = duration / 60;
+        long seconds = duration % 60;
+        return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     }
 
 }
