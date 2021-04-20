@@ -98,7 +98,7 @@
     </delete>
 
     <!--通过课程ID查询平均评分-->
-    <select id="selectAverageScoreByCourseId" resultType="short">
+    <select id="selectAverageScoreByCourseId" resultType="integer">
         SELECT floor(avg(score))
         from evaluation
         where course_id = #{courseId}

@@ -54,7 +54,7 @@ public class EvaluationServiceImpl implements EvaluationService {
         Course course = new Course();
         Long courseId = evaluation.getCourseId();
         course.setId(courseId);
-        Short averageScore = evaluationDao.selectAverageScoreByCourseId(courseId);
+        Integer averageScore = evaluationDao.selectAverageScoreByCourseId(courseId);
         course.setAverageScore(averageScore);
         courseService.update(course);
         User user = new User();
@@ -77,4 +77,3 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
 }
-

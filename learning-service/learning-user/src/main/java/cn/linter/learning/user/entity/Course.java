@@ -47,7 +47,7 @@ public class Course implements Serializable {
     /**
      * 平均评分
      */
-    private Short averageScore;
+    private Integer averageScore;
     /**
      * 封面图片地址
      */

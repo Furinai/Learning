@@ -67,6 +67,6 @@ public interface EvaluationDao {
      * @param courseId 课程ID
      * @return 平均评分
      */
-    Short selectAverageScoreByCourseId(Long courseId);
+    Integer selectAverageScoreByCourseId(Long courseId);
 
 }
