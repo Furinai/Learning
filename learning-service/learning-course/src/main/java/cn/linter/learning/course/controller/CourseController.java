@@ -133,4 +133,18 @@ public class CourseController {
         return ResultStatus.SUCCESS;
     }
 
+    @GetMapping("/search")
+    public Result<Page<Course>> searchCourse(@RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                             @RequestParam(value = "pageNum", defaultValue = "0") int pageNum,
+                                             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        org.springframework.data.domain.Page<Course> courses = courseService.search(keyword, pageNum, pageSize);
+        return Result.of(ResultStatus.SUCCESS, Page.of(courses.getContent(), courses.getTotalElements()));
+    }
+
+    @GetMapping("/synchronize")
+    public ResultStatus synchronizeCourse() {
+        courseService.synchronize();
+        return ResultStatus.SUCCESS;
+    }
+
 }

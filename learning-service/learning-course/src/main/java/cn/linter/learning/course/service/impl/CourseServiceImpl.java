@@ -1,12 +1,16 @@
 package cn.linter.learning.course.service.impl;
 
 import cn.linter.learning.course.dao.CourseDao;
+import cn.linter.learning.course.dao.CourseSearchDao;
 import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.entity.Course;
 import cn.linter.learning.course.entity.User;
 import cn.linter.learning.course.service.CourseService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,9 +26,11 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseDao courseDao;
+    private final CourseSearchDao courseSearchDao;
 
-    public CourseServiceImpl(CourseDao courseDao) {
+    public CourseServiceImpl(CourseDao courseDao, CourseSearchDao courseSearchDao) {
         this.courseDao = courseDao;
+        this.courseSearchDao = courseSearchDao;
     }
 
     @Override
@@ -74,31 +80,39 @@ public class CourseServiceImpl implements CourseService {
         user.setUsername(username);
         course.setTeacher(user);
         course.setApproved(false);
-        course.setAverageScore((short) 0);
+        course.setAverageScore(0);
         LocalDateTime now = LocalDateTime.now();
         course.setCreateTime(now);
         course.setUpdateTime(now);
         courseDao.insert(course);
         courseDao.insertCategory(course.getId(), course.getCategories());
+        courseSearchDao.save(course);
         return course;
     }
 
     @Override
     public Course update(Course course) {
         course.setUpdateTime(LocalDateTime.now());
-        courseDao.update(course);
+        int rows = courseDao.update(course);
         List<Category> categories = course.getCategories();
         if (categories != null && !categories.isEmpty()) {
             courseDao.deleteCategory(course.getId());
             courseDao.insertCategory(course.getId(), categories);
         }
-        return courseDao.selectById(course.getId());
+        Course newCourse = courseDao.selectById(course.getId());
+        courseSearchDao.deleteById(course.getId());
+        courseSearchDao.save(newCourse);
+        return newCourse;
     }
 
     @Override
     public boolean delete(Long id) {
         courseDao.deleteCategory(id);
-        return courseDao.delete(id) > 0;
+        boolean success = courseDao.delete(id) > 0;
+        if (success) {
+            courseSearchDao.deleteById(id);
+        }
+        return success;
     }
 
     @Override
@@ -107,5 +121,16 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.selectById(courseId);
     }
 
-}
+    @Override
+    public Page<Course> search(String keyword, int pageNum, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+        return courseSearchDao.findByNameOrDescription(keyword, keyword, pageable);
+    }
 
+    @Override
+    public void synchronize() {
+        courseSearchDao.deleteAll();
+        courseSearchDao.saveAll(courseDao.list(true, "create_time"));
+    }
+
+}

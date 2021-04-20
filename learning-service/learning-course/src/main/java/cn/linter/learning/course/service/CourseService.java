@@ -3,6 +3,7 @@ package cn.linter.learning.course.service;
 import cn.linter.learning.course.entity.Category;
 import cn.linter.learning.course.entity.Course;
 import com.github.pagehelper.PageInfo;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -114,5 +115,20 @@ public interface CourseService {
      * @return 课程实例
      */
     Course insertRegistration(String username, Long courseId);
+
+    /**
+     * 通过关键词搜索课程
+     *
+     * @param keyword  关键词
+     * @param pageNum  页码
+     * @param pageSize 页大小
+     * @return 课程列表
+     */
+    Page<Course> search(String keyword, int pageNum, int pageSize);
+
+    /**
+     * 同步课程列表到Elasticsearch中
+     */
+    void synchronize();
 
 }
