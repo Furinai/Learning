@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  * 支付控制器
  *
@@ -54,7 +58,7 @@ public class PaymentController {
     }
 
     @RequestMapping("success")
-    public String paymentSuccess(@RequestParam("out_trade_no") String tradeNo) {
+    public void paymentSuccess(@RequestParam("out_trade_no") String tradeNo, HttpServletResponse response) {
         Order order = orderService.queryByTradeNo(tradeNo);
         order.setStatus(1);
         orderService.update(order);
@@ -62,7 +66,14 @@ public class PaymentController {
         course.setId(order.getProductId());
         course.setRegistered(true);
         courseClient.updateCourse(course, order.getUsername());
-        return "支付成功，请刷新课程页面";
+        response.setContentType("text/html; charset=utf8");
+        try (PrintWriter out = response.getWriter()) {
+            out.print("支付成功，3秒之后跳转回课程页面" +
+                    "<script>setTimeout(()=>window.location.href=\"http://localhost:3000/courses/" +
+                    order.getProductId() + "\",3000)</script>");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
