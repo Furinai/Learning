@@ -52,15 +52,15 @@ public class EvaluationServiceImpl implements EvaluationService {
         evaluation.setCreateTime(now);
         evaluation.setUpdateTime(now);
         Course course = new Course();
+        User user = new User();
+        user.setUsername(username);
+        evaluation.setAuthor(user);
+        evaluationDao.insert(evaluation);
         Long courseId = evaluation.getCourseId();
         course.setId(courseId);
         Integer averageScore = evaluationDao.selectAverageScoreByCourseId(courseId);
         course.setAverageScore(averageScore);
         courseService.update(course);
-        User user = new User();
-        user.setUsername(username);
-        evaluation.setAuthor(user);
-        evaluationDao.insert(evaluation);
         return evaluation;
     }
 
