@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -45,7 +46,8 @@ public class WebFluxSecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange()
                 .pathMatchers("/api/oauth/token").permitAll()
-                .pathMatchers("/api/oauth/user/**").authenticated()
+                .pathMatchers(HttpMethod.POST, "/api/oauth/user").permitAll()
+                .pathMatchers(HttpMethod.GET, "/api/oauth/user/**").authenticated()
                 .anyExchange().permitAll()
                 .and().exceptionHandling()
                 .authenticationEntryPoint((exchange, exception) -> sendRestResponse(exchange,
