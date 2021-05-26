@@ -73,16 +73,15 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     private String transformVideoTime(String videoTime) {
-        long duration;
+        double duration;
         try {
-            duration = Long.parseLong(videoTime);
+            duration = Double.parseDouble(videoTime);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("参数异常");
         }
-        long minutes = duration / 60;
-        long seconds = duration % 60;
+        long minutes = (long) (duration / 60);
+        long seconds = (long) (duration % 60);
         return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     }
 
 }
-
