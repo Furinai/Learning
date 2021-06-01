@@ -94,6 +94,7 @@ public class CourseServiceImpl implements CourseService {
     public Course update(Course course) {
         course.setUpdateTime(LocalDateTime.now());
         int rows = courseDao.update(course);
+        System.out.println(rows);
         List<Category> categories = course.getCategories();
         if (categories != null && !categories.isEmpty()) {
             courseDao.deleteCategory(course.getId());

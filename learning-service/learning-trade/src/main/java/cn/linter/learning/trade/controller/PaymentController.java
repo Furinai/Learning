@@ -65,7 +65,7 @@ public class PaymentController {
         Course course = new Course();
         course.setId(order.getProductId());
         course.setRegistered(true);
-        courseClient.updateCourse(course, order.getUsername());
+        courseClient.updateCourse(course.getId(), order.getUsername());
         response.setContentType("text/html; charset=utf8");
         try (PrintWriter out = response.getWriter()) {
             out.print("支付成功，3秒之后跳转回课程页面" +
