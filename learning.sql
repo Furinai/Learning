@@ -124,7 +124,7 @@ create table role
     update_time datetime null comment '更新时间'
 )
     comment '角色';
-    
+
 INSERT INTO `role` VALUES (1, '学生', '2021-01-26 14:46:24', '2021-01-26 14:46:26');
 INSERT INTO `role` VALUES (2, '教师', '2021-03-14 13:46:10', '2021-03-14 13:46:12');
 INSERT INTO `role` VALUES (3, '管理员', '2021-03-14 13:46:21', '2021-03-14 13:46:24');
@@ -146,7 +146,7 @@ create table user
 )
     comment '用户';
 
-INSERT INTO `user` VALUES (1, 'admin', '$2a$10$YmZg6KFPsMVUyWzsxiNgOun7SYoKW1FiAqFvaqnehx2fj0xh5geSa', '张三', '男', 2, 'admin@qq.com', '15648768456', 'http://localhost:8080/dfs/profile-pictures/default.jpg', '2021-01-26 14:36:52', '2021-03-16 19:53:49');
+INSERT INTO `user` VALUES (1, 'admin', '$2a$10$YmZg6KFPsMVUyWzsxiNgOun7SYoKW1FiAqFvaqnehx2fj0xh5geSa', '张三', '男', 3, 'admin@qq.com', '15648768456', 'http://localhost:8080/dfs/profile-pictures/default.jpg', '2021-01-26 14:36:52', '2021-03-16 19:53:49');
 
 create table user_chapter
 (
